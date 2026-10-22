@@ -467,178 +467,186 @@ body.academic-hub-active #academicHub {
 #spAuth input,.spbox input{width:100%;box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid #3a404c;background:#12141a;color:#fff;font-size:16px}
 #spAuth button,.spbox button.pri{padding:12px;border-radius:10px;border:0;background:#5aa2ff;color:#fff;font-size:16px;font-weight:600;cursor:pointer}
 #spAuthErr{color:#ff7b7b;font-size:13px;min-height:16px}
-#spProf{position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:16px}
+#spProf,#spAccWin{position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:16px}
 .spbox .sec{background:#2a2d36;color:#eceff4;border:1px solid #3a404c;padding:10px;border-radius:10px;cursor:pointer;font-size:15px}
 .spbox .out{background:#3a1d1d;color:#ff9a9a;border:1px solid #6b2b2b;padding:12px;border-radius:10px;cursor:pointer;font-size:15px}
-#spCalc{position:fixed;inset:0;z-index:9000;background:#0f1115;color:#eceff4;overflow:auto;display:none;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-#spCalc .w{max-width:900px;margin:0 auto;padding:14px 14px 60px}
-#spCalc .hd{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:10px;margin:-14px -14px 16px;padding:12px 14px;background:rgba(15,17,21,.96);border-bottom:1px solid #343944;backdrop-filter:blur(10px)}#spCalc h2{margin:0;font-size:20px}
-#spCalc .calc-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-#spCalc .calc-exit{background:#b91c1c;color:#fff;border:2px solid #ff5a5a;font-weight:800;box-shadow:0 0 0 2px rgba(255,70,70,.12),0 4px 16px rgba(220,38,38,.28);font-size:15px;padding:10px 14px}
-#spCalc .calc-exit:hover{background:#dc2626;border-color:#ff7777;transform:translateY(-1px)}
-#spCalc .calc-exit .xmark{font-size:19px;line-height:1;margin-right:4px}
-#spCalc .calc-exit .backtxt{font-weight:900}
-@media(max-width:600px){#spCalc .w{padding:8px 9px 36px}#spCalc .hd{margin:-8px -9px 12px;padding:10px 9px;align-items:center}#spCalc h2{font-size:17px;line-height:1.15}.calc-actions{gap:6px!important}.calc-actions #spCalcAdd{font-size:13px;padding:8px 9px}.calc-exit{font-size:13px!important;padding:9px 10px!important}.calc-exit .backtxt{display:inline}.calc-exit .xmark{font-size:18px!important}}
-#spCalc button{background:#262a33;color:#eceff4;border:1px solid #3a404c;border-radius:10px;padding:8px 12px;font-size:14px;cursor:pointer}
-#spCalc button.on{background:#2b3a55;border-color:#5aa2ff}
-#spCalc input{box-sizing:border-box;padding:10px;border-radius:10px;border:1px solid #3a404c;background:#12141a;color:#eceff4;font-size:16px;width:100%;min-width:0}
-#spCalc .cc{background:#1b1e25;border:1px solid #343944;border-radius:14px;padding:12px;margin-bottom:12px;display:flex;flex-direction:column;gap:10px}
-#spCalc .ch,#spCalc .rw{display:flex;gap:8px;align-items:center}#spCalc .cm{display:flex;gap:6px;flex-wrap:wrap}
-#spCalc .chips{display:flex;flex-wrap:wrap;gap:6px}#spCalc .chip{padding:4px 8px;border-radius:8px;background:#262a33;font-size:14px;cursor:pointer}
-#spCalc .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}#spCalc label{font-size:12px;color:#9aa3b2;display:flex;flex-direction:column;gap:4px}
-#spCalc .res{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}#spCalc .res div{background:#12141a;border-radius:10px;padding:8px;font-size:12px;color:#9aa3b2}
-#spCalc .res b{display:block;font-size:19px;margin-top:2px}#spCalc .sm,#spCalc .hint{font-size:13px;color:#8a92a0;line-height:1.4}
-#spCalc .ca{color:#4cd48a}#spCalc .cb{color:#6fb1ff}#spCalc .cy{color:#f2c94c}#spCalc .cr{color:#ff6b6b}#spCalc .cg{color:#7d8492}
-#spCalc input.ca{color:#4cd48a}#spCalc input.cb{color:#6fb1ff}#spCalc input.cy{color:#f2c94c}#spCalc input.cr{color:#ff6b6b}
-#spCalc .note{color:#7d8492;font-size:12px;margin-top:14px;line-height:1.5}
+#spAccWin .arow{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr)) 44px;gap:6px;align-items:center;margin-bottom:8px}#spAccWin .arow input{padding:9px;font-size:14px}#spAccWin .arow button{padding:9px}#spAccWin .adir{grid-column:1/-1;color:#7d8492;font-size:11px;margin-top:-3px}#spAccWin .arow2{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}#spAccWin .arow2 button{flex:1 1 auto}
+#calcView{position:fixed;left:0;right:0;bottom:0;z-index:150;background:var(--bg);color:var(--ink);overflow:auto;-webkit-overflow-scrolling:touch}
+#calcView[hidden]{display:none}
+#calcView .cv-w{max-width:760px;margin:0 auto;padding:16px 14px calc(90px + env(safe-area-inset-bottom))}
+#calcView .cv-hd{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+#calcView h2{margin:0;font-size:20px}#calcView .cv-sub{color:var(--mute);font-size:13px;margin:2px 0 0}
+#calcView button{white-space:nowrap;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 14px;cursor:pointer;font-weight:600}
+#calcView button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+#calcView button.cv-go{background:var(--acc);border-color:var(--acc);color:#fff}
+#calcView input{width:100%;min-width:0;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px}
+#calcView input:focus{outline:2px solid var(--acc);outline-offset:-1px}
+#calcView .cv-c{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px;display:flex;flex-direction:column;gap:12px}
+#calcView .cv-r{display:flex;gap:8px;align-items:center}#calcView .cv-seg{display:flex;gap:6px;flex-wrap:wrap}
+#calcView .cv-seg button{flex:1 1 140px;font-weight:500;font-size:14px}
+#calcView .cv-chips{display:flex;flex-wrap:wrap;gap:6px}#calcView .cv-chip{padding:5px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-size:14px;cursor:pointer}
+#calcView .cv-g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#calcView label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mute)}
+#calcView .cv-res{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;text-align:center}
+#calcView .cv-res div{text-align:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 4px;font-size:12px;color:var(--mute)}
+#calcView .cv-res b{display:block;font-size:22px;margin-top:2px;font-variant-numeric:tabular-nums}
+#calcView .cv-sm,#calcView .cv-hint{font-size:13px;color:var(--mute);line-height:1.45}
+#calcView .cv-note{color:var(--mute);font-size:12px;line-height:1.55;margin-top:6px}
+#calcView .ca{color:#35c27d}#calcView .cb{color:#5aa2ff}#calcView .cy{color:#e0b52a}#calcView .cr{color:#ff6b6b}#calcView .cg{color:var(--mute)}
+#calcView input.ca{color:#35c27d}#calcView input.cb{color:#5aa2ff}#calcView input.cy{color:#e0b52a}#calcView input.cr{color:#ff6b6b}
+html.theme-light #calcView .ca{color:#17894f}html.theme-light #calcView .cb{color:#2f5fd0}html.theme-light #calcView .cy{color:#9a7400}html.theme-light #calcView .cr{color:#d64545}
+html.theme-light #calcView input.ca{color:#17894f}html.theme-light #calcView input.cb{color:#2f5fd0}html.theme-light #calcView input.cy{color:#9a7400}html.theme-light #calcView input.cr{color:#d64545}
+#spNav .navb.on#navCalc{background:#1d2b38;color:#fff}html.theme-light #spNav .navb.on#navCalc{background:#e6ecf8;color:#1c2433}
+@media(max-width:480px){#calcView .cv-w{padding:12px 10px calc(90px + env(safe-area-inset-bottom))}#calcView .cv-c{padding:12px}#calcView .cv-res b{font-size:19px}}
 </style>
 <script>
 /* =====================================================================
-   АККАУНТЫ STUDYPLAY  (здесь вы сами добавляете логины, пароли и группы)
-   ---------------------------------------------------------------------
-   Добавьте строку в STUDYPLAY_ACCOUNTS:
-     {login:'Логин', password:'Пароль', group:'ИР-252', folder:'ir-252', name:'Имя Фамилия'}
-   Группа определяет, какое расписание получит человек.
-
-   ИНСТРУКЦИЯ ДЛЯ GITHUB (логины, группы и расписание):
-   1. Логины можно хранить отдельно в data/accounts.json. Файл можно создать, объединить со старым и скачать прямо через «⋯ Ещё» → «Логины и пароли GitHub».
-   2. Для каждого пользователя в accounts.json указывайте не только группу, но и точное имя папки: например group: 'ИР-252' и folder: 'ir-252'. Это поле folder используется сайтом напрямую, поэтому он не пытается угадывать имя папки. В GitHub создайте именно data/ir-252/.
-   3. В неё положите schedule.json (и при желании manifest.json с материалами/ссылками).
-      Получить файлы: в сайте меню «⋯ Ещё» → «Скачать schedule.json» / «Скачать manifest.json».
-   4. Люди из одной группы видят своё расписание из своей папки.
-      Совпадающие предметы — не проблема, у каждой группы свой schedule.json.
-   5. Сайт НЕ проверяет обновления автоматически. Для проверки откройте «⋯ Ещё» → «🔔 Проверить обновление расписания». Если версия новее, сайт покажет уведомление и предложит применить её.
-   6. Чтобы выпустить новое расписание, замените schedule.json группы и поменяйте "version"
-      (например 2026-10-22.1 → 2026-10-23.1), затем git push.
-   7. Новую группу: в accounts.json укажите group и folder (например 'МР-252' + 'mr-252'), затем создайте data/mr-252/. Добавлять группу в код STUDYPLAY_GROUPS больше не обязательно.
-   Оценки в разделе «Оценка» личные: хранятся отдельно для каждого логина.
-
-   ВАЖНО: GitHub Pages - статический сайт, логины и пароли лежат в открытом
-   коде страницы. Это разграничение «кто какую группу видит», а не защита
-   секретных данных. Не используйте здесь реальные пароли от Platonus и почты.
-
-   ПЛАНЫ: автоматическая загрузка с timetable.kgu.kz и platonus.kgu.kz
-   потребует маленький прокси (например Cloudflare Worker) - браузер сам
-   не сможет войти на чужой сайт. Подключать его нужно в функцию refreshBase().
+   ВХОД И ГРУППЫ STUDYPLAY
+   Логины и пароли хранятся в файле  data/accounts.json  (его делают прямо
+   на сайте: «⋯ Ещё» → «👥 Логины и пароли (файл)» → «Скачать accounts.json»).
+   Подробная памятка: «⋯ Ещё» → «📋 Памятка для автора».
+   Ниже - запасная (встроенная) учётка: работает, даже если файла ещё нет.
+   Хотите убрать её - удалите строку из STUDYPLAY_ACCOUNTS.
+   ВАЖНО: GitHub Pages - статический сайт, логины и пароли видны в коде.
+   Это разделение «кто какую группу видит», а не защита секретов. Не используйте
+   реальные пароли от Platonus, почты и т.п.
+   ПЛАНЫ: загрузка с timetable.kgu.kz и platonus.kgu.kz потребует маленький
+   прокси (например Cloudflare Worker) - подключать его нужно в fetchBase().
    ===================================================================== */
-let STUDYPLAY_ACCOUNTS=[
-  {login:'1',password:'1',group:'ИР-252',folder:'ir-252',name:'Студент ИР-252'},
-  {login:'2',password:'2',group:'ИК-252',folder:'ik-252',name:'Студент ИК-252'}
+const STUDYPLAY_ACCOUNTS=[
+  {login:'Ерғали_Алан',password:'4419',group:'ИР-252',name:'Ерғали Алан'}
 ];
-const STUDYPLAY_DEFAULT_ACCOUNTS=JSON.parse(JSON.stringify(STUDYPLAY_ACCOUNTS));
-async function loadStudyPlayAccounts(){
-  try{
-    const r=await fetch('./data/accounts.json?ts='+Date.now(),{cache:'no-store'});
-    if(!r.ok)throw Error('accounts.json '+r.status);
-    const x=await r.json();
-    const incoming=Array.isArray(x)?x:(Array.isArray(x.accounts)?x.accounts:[]);
-    if(incoming.length){
-      const byLogin=new Map(STUDYPLAY_DEFAULT_ACCOUNTS.map(a=>[String(a.login||'').trim().toLowerCase(),a]));
-      incoming.filter(a=>a&&String(a.login||'').trim()&&String(a.password??'')!==''&&String(a.group||'').trim()).forEach(a=>{
-        byLogin.set(String(a.login).trim().toLowerCase(),{login:String(a.login).trim(),password:String(a.password??''),group:String(a.group||'').trim(),folder:String(a.folder||'').trim(),name:String(a.name||a.login).trim()});
-      });
-      STUDYPLAY_ACCOUNTS=[...byLogin.values()];
-    }
-  }catch(e){ /* при недоступном accounts.json остаётся встроенный список */ }
-  window.STUDYPLAY_ACCOUNTS=STUDYPLAY_ACCOUNTS;
-  return STUDYPLAY_ACCOUNTS;
-}
-const STUDYPLAY_GROUPS={
-  'ИР-252':{dir:'ir-252',legacy:true},   /* legacy: старый data/schedule.json тоже читается */
-  'ИК-252':{dir:'ik-252'}
-};
+/* legacy:true - группа может читать и старый data/schedule.json. Папку группы сайт делает сам: ИР-252 → data/ir-252/ */
+const STUDYPLAY_GROUPS={'ИР-252':{legacy:true}};
 (function(){
- const AK='studyplay-auth-v1',nk=s=>String(s||'').toUpperCase().replace(/[^0-9A-ZА-ЯЁҒҚҢӨҰҮІӘҺ]/g,''),ll=s=>String(s||'').trim().toLowerCase();
- const findAcc=l=>STUDYPLAY_ACCOUNTS.find(a=>ll(a.login)===ll(l));
- const slugGroup=g=>{let s=String(g||'').trim().toLowerCase();const map={'а':'a','ә':'a','б':'b','в':'v','г':'g','ғ':'g','д':'d','е':'e','ё':'yo','ж':'zh','з':'z','и':'i','й':'y','к':'k','қ':'q','л':'l','м':'m','н':'n','ң':'n','о':'o','ө':'o','п':'p','р':'r','с':'s','т':'t','у':'u','ұ':'u','ү':'u','ф':'f','х':'h','һ':'h','ц':'c','ч':'ch','ш':'sh','щ':'sh','ъ':'','ы':'y','ь':'','э':'e','ю':'yu','я':'ya','і':'i'};s=[...s].map(c=>map[c]??c).join('');return s.replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'')};
- const grp=(g,folder)=>{const k=Object.keys(STUDYPLAY_GROUPS).find(x=>nk(x)===nk(g));if(folder)return{name:k||String(g||'').trim(),dir:String(folder).trim()};return k?{name:k,...STUDYPLAY_GROUPS[k]}:{name:String(g||'').trim(),dir:slugGroup(g)}};
+ const AK='studyplay-auth-v1',CK='studyplay-accounts-cache-v1',nk=s=>String(s||'').toUpperCase().replace(/[^0-9A-ZА-ЯЁҒҚҢӨҰҮІӘҺ]/g,''),ll=s=>String(s||'').trim().toLowerCase();
+ const TR={'а':'a','б':'b','в':'v','г':'g','ғ':'g','д':'d','е':'e','ё':'e','ж':'zh','з':'z','и':'i','й':'i','к':'k','қ':'k','л':'l','м':'m','н':'n','ң':'n','о':'o','ө':'o','п':'p','р':'r','с':'s','т':'t','у':'u','ұ':'u','ү':'u','ф':'f','х':'h','һ':'h','ц':'c','ч':'ch','ш':'sh','щ':'sh','ъ':'','ы':'y','і':'i','ь':'','э':'e','ю':'yu','я':'ya','ә':'a'};
+ const slug=g=>String(g||'').toLowerCase().split('').map(c=>TR[c]!==undefined?TR[c]:c).join('').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+ let cache={version:'',accounts:[]};try{const c=JSON.parse(localStorage.getItem(CK)||'null');if(c&&Array.isArray(c.accounts))cache=c}catch(e){}
+ const fsan=s=>String(s||'').toLowerCase().trim().replace(/[^a-z0-9_-]+/g,'-').replace(/^-+|-+$/g,'');
+ const clean=a=>(Array.isArray(a)?a:[]).filter(x=>x&&x.login&&x.password!=null&&x.group).map(x=>({login:String(x.login).trim(),password:String(x.password),group:String(x.group).trim(),name:String(x.name||x.login).trim(),folder:fsan(x.folder)}));
+ const merge=(...ls)=>{const m=new Map();ls.forEach(l=>clean(l).forEach(a=>m.set(ll(a.login),a)));return[...m.values()]};
+ const known=()=>merge(STUDYPLAY_ACCOUNTS,cache.accounts),findAcc=l=>known().find(a=>ll(a.login)===ll(l));
+ async function fetchAcc(){if(location.protocol==='file:')return null;try{const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),6000);const r=await fetch('data/accounts.json',{cache:'no-cache',signal:ctl.signal});clearTimeout(t);if(!r.ok)return null;const j=await r.json(),arr=Array.isArray(j)?j:j.accounts;if(!Array.isArray(arr))return null;cache={version:String(j.version||''),accounts:clean(arr)};try{localStorage.setItem(CK,JSON.stringify(cache))}catch(e){}return cache}catch(e){return null}}
+ const grp=(g,f)=>{const k=Object.keys(STUDYPLAY_GROUPS).find(x=>nk(x)===nk(g)),o=k?STUDYPLAY_GROUPS[k]:{};return{name:k||String(g||'').trim(),dir:fsan(f)||o.dir||slug(g),legacy:!!o.legacy}};
+ window.spSlug=(g,f)=>grp(g,f).dir;
  let au=null;try{au=JSON.parse(localStorage.getItem(AK)||'null')}catch(e){}
  if(au&&!findAcc(au.login))au=null;
  window.SP_AUTH=au;
- if(au){const g=grp(au.group,au.folder);window.SP_GROUP=g.name;window.SP_GROUP_DIR=g.dir;window.SP_LEGACY=!!g.legacy}
+ if(au){const g=grp(au.group,au.folder);window.SP_GROUP=g.name;window.SP_GROUP_DIR=g.dir;window.SP_LEGACY=g.legacy;
+  fetchAcc().then(c=>{if(!c)return;const a=findAcc(au.login);if(!a){try{localStorage.removeItem(AK)}catch(e){}location.reload();return}
+   if(nk(a.group)!==nk(au.group)||grp(a.group,a.folder).dir!==g.dir){try{localStorage.setItem(AK,JSON.stringify({login:a.login,name:a.name,group:grp(a.group).name,folder:a.folder}))}catch(e){}location.reload()}})}
  const E=(t,h)=>{const d=document.createElement(t);if(h)d.innerHTML=h;return d};
+ const ea=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
  function loginUI(){
-  const groups=[...new Set([...Object.keys(STUDYPLAY_GROUPS),...STUDYPLAY_ACCOUNTS.map(a=>a.group).filter(Boolean)])];
-  const ov=E('div','<form autocomplete="on"><h2>StudyPlay</h2><p>Войдите один раз — дальше сайт вас запомнит.</p><input id="spL" placeholder="Логин" autocomplete="username"><input id="spP" type="password" placeholder="Пароль" autocomplete="current-password"><input id="spG" list="spGl" placeholder="Группа, например ИР-252"><datalist id="spGl">'+groups.map(g=>'<option value="'+String(g).replace(/"/g,'&quot;')+'">').join('')+'</datalist><div id="spAuthErr"></div><button type="submit">Войти</button></form>');
+  const ov=E('div','<form autocomplete="on"><h2>StudyPlay</h2><p>Войдите один раз — дальше сайт вас запомнит.</p><input id="spL" placeholder="Логин" autocomplete="username"><input id="spP" type="password" placeholder="Пароль" autocomplete="current-password"><input id="spG" list="spGl" placeholder="Группа, например ИР-252"><datalist id="spGl">'+[...new Set(known().map(a=>a.group))].map(g=>'<option value="'+ea(g)+'">').join('')+'</datalist><div id="spAuthErr"></div><button type="submit">Войти</button></form>');
   ov.id='spAuth';document.body.appendChild(ov);
-  ov.querySelector('#spL').addEventListener('change',e=>{const a=findAcc(e.target.value);if(a&&a.group&&!ov.querySelector('#spG').value)ov.querySelector('#spG').value=a.group});
-  ov.querySelector('form').addEventListener('submit',e=>{e.preventDefault();
-   const l=ov.querySelector('#spL').value,p=ov.querySelector('#spP').value,g=ov.querySelector('#spG').value,er=ov.querySelector('#spAuthErr'),a=findAcc(l);
+  ov.querySelector('#spL').addEventListener('change',e=>{const a=findAcc(e.target.value);if(a&&!ov.querySelector('#spG').value)ov.querySelector('#spG').value=a.group});
+  ov.querySelector('form').addEventListener('submit',async e=>{e.preventDefault();
+   const er=ov.querySelector('#spAuthErr'),btn=ov.querySelector('button');btn.disabled=true;er.style.color='#9aa3b2';er.textContent='Проверка…';await fetchAcc();btn.disabled=false;er.style.color='';
+   const l=ov.querySelector('#spL').value,p=ov.querySelector('#spP').value,g=ov.querySelector('#spG').value,a=findAcc(l);
    if(!a||a.password!==p){er.textContent='Неверный логин или пароль';return}
-   const grp0=g||a.group;if(!grp0){er.textContent='Укажите группу';return}
-   if(a.group&&nk(a.group)!==nk(grp0)){er.textContent='Эта учётная запись относится к группе '+a.group;return}
-   try{localStorage.setItem(AK,JSON.stringify({login:a.login,name:a.name||a.login,group:grp(grp0,a.folder).name,folder:String(a.folder||grp(grp0).dir)}))}catch(x){er.textContent='Не удалось сохранить вход (память браузера отключена)';return}
+   const g0=g||a.group;
+   if(nk(a.group)!==nk(g0)){er.textContent='Эта учётная запись относится к группе '+a.group;return}
+   try{localStorage.setItem(AK,JSON.stringify({login:a.login,name:a.name||a.login,group:grp(a.group).name,folder:a.folder}))}catch(x){er.textContent='Не удалось сохранить вход (память браузера отключена)';return}
    location.reload()});
  }
+ function accUI(){
+  const P=document.getElementById('spProf');if(P)P.style.display='none';
+  let rows=known().map(a=>({...a,folder:a.folder||grp(a.group).dir}));
+  const o=E('div','<div class="spbox" style="width:min(760px,100%);max-height:92vh;overflow:auto"></div>');o.id='spAccWin';o.style.display='flex';document.body.appendChild(o);
+  const box=o.firstChild;let msg='';
+  const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+  const nextVer=()=>{const t=today(),m=String(cache.version||'').match(/^(\d{4}-\d{2}-\d{2})\.(\d+)$/);return m&&m[1]===t?t+'.'+(+m[2]+1):t+'.1'};
+  const addNew=list=>{let n=0,s=0;clean(list).forEach(a=>{if(rows.some(r=>ll(r.login)===ll(a.login)))s++;else{rows.push({...a,folder:a.folder||grp(a.group).dir});n++}});return[n,s]};
+  function draw(){
+   box.innerHTML='<h2>👥 Логины и пароли</h2><p style="color:#9aa3b2;font-size:13px;margin:0">Здесь собирается файл <b>accounts.json</b>. Он уже содержит все известные сайту учётки, поэтому старые логины не потеряются. Добавьте новые, нажмите «Скачать» и положите файл в <b>data/accounts.json</b> репозитория (замена файла), затем git push. Группа определяет, какое расписание увидит человек, а поле «Папка» — в какой папке data/ оно лежит (например ir-252 → data/ir-252/schedule.json).</p>'
+   +'<datalist id="spGl2">'+[...new Set(rows.map(r=>r.group).filter(Boolean))].map(g=>'<option value="'+ea(g)+'">').join('')+'</datalist>'
+   +rows.map((r,i)=>'<div class="arow" data-i="'+i+'"><input data-k="login" placeholder="Логин" value="'+ea(r.login)+'"><input data-k="password" placeholder="Пароль" value="'+ea(r.password)+'"><input data-k="group" list="spGl2" placeholder="Группа" value="'+ea(r.group)+'"><input data-k="folder" placeholder="Папка, напр. ir-252" value="'+ea(r.folder)+'"><input data-k="name" placeholder="Имя" value="'+ea(r.name)+'"><button type="button" class="out" data-del="'+i+'" title="Удалить">✕</button><small class="adir">'+(r.group?'расписание: data/'+ea(window.spSlug(r.group,r.folder))+'/schedule.json':'')+'</small></div>').join('')
+   +'<div class="arow2"><button type="button" class="sec" id="aAdd">+ Добавить</button><button type="button" class="sec" id="aPull">☁ Подтянуть с GitHub</button><button type="button" class="sec" id="aMerge">📥 Объединить с файлом…</button><button type="button" class="pri" id="aDl">⬇ Скачать accounts.json</button><button type="button" class="sec" id="aX">Закрыть</button></div><input type="file" id="aFile" accept=".json,application/json" hidden><div id="aMsg" style="font-size:13px;color:#9aa3b2;min-height:18px">'+ea(msg)+'</div>'}
+  const say=t=>{msg=t;const m=box.querySelector('#aMsg');if(m)m.textContent=t};
+  o.addEventListener('input',e=>{const r=e.target.closest('.arow');if(!r)return;const row=rows[+r.dataset.i],k=e.target.dataset.k;row[k]=e.target.value;
+   if(k==='group'){const same=rows.find(x=>x!==row&&nk(x.group)===nk(row.group)&&x.folder);row.folder=same?same.folder:(row.group?slug(row.group):'')}
+   if(k==='folder')rows.forEach(x=>{if(x!==row&&row.group&&nk(x.group)===nk(row.group))x.folder=row.folder});
+   if(k==='group'||k==='folder')o.querySelectorAll('.arow').forEach(el=>{const x=rows[+el.dataset.i],fi=el.querySelector('[data-k=folder]');if(fi!==document.activeElement)fi.value=x.folder;el.querySelector('.adir').textContent=x.group?'расписание: data/'+(fsan(x.folder)||slug(x.group))+'/schedule.json':''})});
+  o.addEventListener('click',async e=>{const t=e.target;if(t===o){o.remove();return}
+   if(t.dataset.del!==undefined){rows.splice(+t.dataset.del,1);draw();return}
+   if(t.id==='aX'){o.remove();return}
+   if(t.id==='aAdd'){rows.push({login:'',password:'',group:rows.length?rows[rows.length-1].group:'',name:'',folder:rows.length?rows[rows.length-1].folder:''});draw();const ins=box.querySelectorAll('.arow');ins[ins.length-1].querySelector('input').focus();return}
+   if(t.id==='aPull'){say('Загрузка…');const c=await fetchAcc();if(!c){say('Не удалось загрузить data/accounts.json (нет файла, нет сети или сайт открыт как файл).');return}const[n,s]=addNew(c.accounts);draw();say('С GitHub добавлено: '+n+(s?', уже были в списке: '+s:'')+'. Версия файла: '+(c.version||'—'));return}
+   if(t.id==='aMerge'){box.querySelector('#aFile').click();return}
+   if(t.id==='aDl'){
+    const bad=rows.findIndex(r=>!String(r.login).trim()||!String(r.password)||!String(r.group).trim()||!(fsan(r.folder)||slug(r.group)));
+    if(bad>=0){say('Строка '+(bad+1)+': заполните логин, пароль и группу (или удалите строку).');return}
+    const m=new Map();rows.forEach(r=>m.set(ll(r.login),{login:r.login.trim(),password:r.password,group:r.group.trim(),folder:fsan(r.folder)||slug(r.group),name:(r.name||r.login).trim()}));
+    const out={version:nextVer(),updatedAt:new Date().toISOString(),accounts:[...m.values()]};
+    const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)],{type:'application/json'}));a.download='accounts.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+    say('Скачан accounts.json (версия '+out.version+', учёток: '+out.accounts.length+'). Положите его в data/accounts.json репозитория и сделайте git push.');return}});
+  o.addEventListener('change',async e=>{if(e.target.id!=='aFile')return;const f=e.target.files[0];if(!f)return;try{const j=JSON.parse(await f.text()),arr=Array.isArray(j)?j:j.accounts;if(!Array.isArray(arr))throw 0;const[n,s]=addNew(arr);draw();say('Из файла «'+f.name+'» добавлено: '+n+(s?', пропущено (логин уже в списке): '+s:'')+'.')}catch(x){say('Не удалось прочитать файл: нужен accounts.json.')}});
+  draw()}
+ window.spAccounts=accUI;
  function profUI(){
-  let m=document.getElementById('spProf');if(!m){m=E('div','<div class="spbox"><h2>👤 Профиль</h2><div id="spProfInfo"></div><button class="out" id="spOut">Выйти</button><button class="sec" id="spProfClose">Закрыть</button></div>');m.id='spProf';document.body.appendChild(m);
-   m.addEventListener('click',e=>{if(e.target===m||e.target.id==='spProfClose')m.style.display='none'});
+  let m=document.getElementById('spProf');if(!m){m=E('div','<div class="spbox"><h2>👤 Профиль</h2><div id="spProfInfo"></div><button class="sec" id="spProfAcc">👥 Логины и пароли (файл)</button><button class="out" id="spOut">Выйти</button><button class="sec" id="spProfClose">Закрыть</button></div>');m.id='spProf';document.body.appendChild(m);
+   m.addEventListener('click',e=>{if(e.target===m||e.target.id==='spProfClose')m.style.display='none';if(e.target.id==='spProfAcc')accUI()});
    m.querySelector('#spOut').onclick=()=>{if(!confirm('Выйти из аккаунта?'))return;try{localStorage.removeItem(AK)}catch(x){}location.reload()}}
-  const a=window.SP_AUTH||{};m.querySelector('#spProfInfo').innerHTML='<div style="line-height:1.7"><b>'+(a.name||'')+'</b><br>Логин: '+(a.login||'')+'<br>Группа: '+(a.group||'')+'</div>';m.style.display='flex'}
- document.addEventListener('DOMContentLoaded',async()=>{
-  await loadStudyPlayAccounts();
-  let saved=null;try{saved=JSON.parse(localStorage.getItem(AK)||'null')}catch(e){}
-  const savedAcc=saved&&findAcc(saved.login);
-  if(savedAcc){
-    const g=grp(savedAcc.group,savedAcc.folder);window.SP_AUTH={login:savedAcc.login,name:savedAcc.name||savedAcc.login,group:g.name,folder:g.dir};window.SP_GROUP=g.name;window.SP_GROUP_DIR=g.dir;window.SP_LEGACY=!!g.legacy;
-  }else{
-    try{localStorage.removeItem(AK)}catch(e){}
-    window.SP_AUTH=null;loginUI();
-  }
- });
+  const a=window.SP_AUTH||{};m.querySelector('#spProfInfo').innerHTML='<div style="line-height:1.7"><b>'+ea(a.name)+'</b><br>Логин: '+ea(a.login)+'<br>Группа: '+ea(a.group)+'</div>';m.style.display='flex'}
+ document.addEventListener('DOMContentLoaded',()=>{if(!window.SP_AUTH)loginUI()});
  document.addEventListener('click',e=>{if(e.target.closest('#navProfile'))profUI()});
 })();
-/* ===== Калькулятор оценки ===== */
+/* ===== Вкладка «Оценка» (часть сайта, как секундомер) ===== */
 (function(){
  const KEY='studyplay-calc-v1:'+String((window.SP_AUTH||{}).login||'').toLowerCase();
  let st=null;try{st=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}if(!st||!Array.isArray(st.s))st={s:[]};
  const sv=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
  const num=v=>{if(v===''||v==null)return null;const n=parseFloat(String(v).replace(',','.'));return isNaN(n)?null:Math.max(0,Math.min(100,n))};
- const LET=[[95,'A',4],[90,'A-',3.67],[85,'B+',3.33],[80,'B',3],[75,'B-',2.67],[70,'C+',2.33],[65,'C',2],[60,'C-',1.67],[55,'D+',1.33],[50,'D',1],[25,'FX',.5],[0,'F',0]];
  const col=v=>v==null||v===0?'cg':v>=90?'ca':v>=70?'cb':v>=50?'cy':'cr';
  const f1=v=>(Math.round(v*10)/10).toString();
  const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
- const cur=s=>{if(s.mode==='avg')return num(s.avg);const g=(s.grades||[]).map(Number).filter(x=>!isNaN(x));return g.length?g.reduce((a,b)=>a+b,0)/g.length:null};
+ const cur=s=>{const g=(s.grades||[]).map(Number).filter(x=>!isNaN(x));return s.mode==='avg'?num(s.avg):(g.length?g.reduce((a,b)=>a+b,0)/g.length:null)};
  const NM={c:'текущая',r1:'РК1',r2:'РК2',e:'экзамен'},W={c:.36,r1:.12,r2:.12,e:.4};
- function vals(s){return{c:cur(s),r1:num(s.rk1),r2:num(s.rk2),e:num(s.exam)}}
- function need(v,T){const un=Object.keys(W).filter(k=>v[k]==null);if(!un.length)return null;let K=0;for(const k in W)if(v[k]!=null)K+=W[k]*v[k];const Wu=un.reduce((a,k)=>a+W[k],0);return{un,x:(T-K)/Wu}}
+ const vals=s=>({c:cur(s),r1:num(s.rk1),r2:num(s.rk2),e:num(s.exam)});
+ function need(v,T){const un=Object.keys(W).filter(k=>v[k]==null);if(!un.length)return null;let K=0;for(const k in W)if(v[k]!=null)K+=W[k]*v[k];return{un,x:(T-K)/un.reduce((a,k)=>a+W[k],0)}}
  const fmtN=x=>x<=0?'уже хватает':x>100?'не хватит даже на 100':'≥ '+Math.ceil(x);
+ let view=null;
  function upd(card,s){
   const v=vals(s),R=v.c!=null&&v.r1!=null&&v.r2!=null?.6*v.c+.2*v.r1+.2*v.r2:null,F=R!=null&&v.e!=null?.6*R+.4*v.e:null;
-  const setR=(sel,val,extra)=>{const e=card.querySelector(sel);e.className=col(val);e.textContent=val==null?'—':f1(val)+(extra||'')};
-  setR('[data-r=c]',v.c);setR('[data-r=r]',R);
-  const fe=card.querySelector('[data-r=f]');fe.className=F==null?'cg':col(F);
-  if(F==null)fe.textContent='—';else fe.textContent=f1(F)
-  const sm=card.querySelector('.sm');if(sm&&s.mode!=='avg'){const g=s.grades||[];sm.textContent='Оценок: '+g.length+(v.c!=null?' · средняя '+f1(v.c):'')}
+  const put=(k,val)=>{const e=card.querySelector('[data-r='+k+']');e.className=col(val);e.textContent=val==null?'—':f1(val)};
+  put('c',v.c);put('r',R);put('f',F);
+  const sm=card.querySelector('.cv-sm');if(sm)sm.textContent='Оценок: '+(s.grades||[]).length+(v.c!=null?' · средняя '+f1(v.c):'');
   [['rk1',v.r1],['rk2',v.r2],['exam',v.e]].forEach(([k,val])=>{const i=card.querySelector('[data-f='+k+']');if(i)i.className=val==null?'':col(val)});
-  const n70=need(v,70),n72=need(v,72),h=card.querySelector('.hint');
+  const n70=need(v,70),n72=need(v,72),h=card.querySelector('.cv-hint');
   card.querySelectorAll('[data-f=rk1],[data-f=rk2],[data-f=exam]').forEach(i=>{const k={rk1:'r1',rk2:'r2',exam:'e'}[i.dataset.f];i.placeholder=(n72&&n72.un.includes(k)&&n72.x>0&&n72.x<=100)?'≈'+Math.ceil(n72.x):'0–100'});
-  if(!n70)h.textContent=F>=70?'✓ Итог 70+ (четвёрка и выше).':'Итог ниже 70.';
-  else{const lst=n70.un.map(k=>NM[k]).join(', ');h.textContent=(n70.un.length===1?'Чтобы выйти на 70+ ('+lst+'): ':'Чтобы выйти на 70+, нужно в среднем по ('+lst+'): ')+fmtN(n70.x)+'. С запасом (72): '+fmtN(n72.x)+'.'}
- }
+  if(!n70)h.textContent=F>=70?'✓ Итог 70+ — четвёрка и выше.':'Итог ниже 70.';
+  else{const l=n70.un.map(k=>NM[k]).join(', ');h.textContent=(n70.un.length===1?'Чтобы выйти на 70+ ('+l+'): ':'Чтобы выйти на 70+, нужно в среднем по ('+l+'): ')+fmtN(n70.x)+'. С запасом (72): '+fmtN(n72.x)+'.'}}
  function card(s,i){
-  const g=(s.grades||[]).map((x,j)=>'<span class="chip '+col(+x)+'" data-a="delg" data-j="'+j+'">'+esc(x)+' ✕</span>').join('');
-  return '<div class="cc" data-i="'+i+'"><div class="ch"><input data-f="name" value="'+esc(s.name)+'" placeholder="Название предмета"><button data-a="del" title="Удалить предмет">🗑</button></div>'
-  +'<div class="cm"><button data-a="mode" data-m="list" class="'+(s.mode!=='avg'?'on':'')+'">Оценки по одной</button><button data-a="mode" data-m="avg" class="'+(s.mode==='avg'?'on':'')+'">Средняя числом</button></div>'
+  const g=(s.grades||[]).map((x,j)=>'<span class="cv-chip '+col(+x)+'" data-a="delg" data-j="'+j+'" title="Удалить оценку">'+esc(x)+' ✕</span>').join('');
+  return '<div class="cv-c" data-i="'+i+'"><div class="cv-r"><input data-f="name" value="'+esc(s.name)+'" placeholder="Название предмета"><button type="button" data-a="del" title="Удалить предмет" aria-label="Удалить предмет">🗑</button></div>'
+  +'<div class="cv-seg"><button type="button" data-a="mode" data-m="list" class="'+(s.mode!=='avg'?'on':'')+'">Оценки по одной</button><button type="button" data-a="mode" data-m="avg" class="'+(s.mode==='avg'?'on':'')+'">Средняя числом</button></div>'
   +(s.mode==='avg'?'<label>Текущая средняя<input data-f="avg" inputmode="decimal" value="'+esc(s.avg)+'" placeholder="0–100"></label>'
-   :'<div class="chips">'+g+'</div><div class="rw"><input data-f="newg" inputmode="decimal" placeholder="Новая оценка (0–100)"><button data-a="addg">+ Добавить</button></div><div class="sm"></div>')
-  +'<div class="g3"><label>РК1<input data-f="rk1" inputmode="decimal" value="'+esc(s.rk1)+'"></label><label>РК2<input data-f="rk2" inputmode="decimal" value="'+esc(s.rk2)+'"></label><label>Экзамен<input data-f="exam" inputmode="decimal" value="'+esc(s.exam)+'"></label></div>'
-  +'<div class="res"><div>Текущая<b data-r="c"></b></div><div>Рейтинг<b data-r="r"></b></div><div>Итог<b data-r="f"></b></div></div><div class="hint"></div></div>'}
- function draw(){const L=document.getElementById('spCalcList');L.innerHTML=st.s.length?st.s.map(card).join(''):'<p class="sm">Предметов пока нет. Нажмите «+ Предмет».</p>';L.querySelectorAll('.cc').forEach(c=>upd(c,st.s[+c.dataset.i]))}
- function open(){let o=document.getElementById('spCalc');if(!o){o=document.createElement('div');o.id='spCalc';
-  o.innerHTML='<div class="w"><div class="hd"><h2>🎯 Расчёт оценки</h2><div class="calc-actions"><button id="spCalcAdd">+ Предмет</button><button id="spCalcX" class="calc-exit" title="Выйти из оценок и вернуться в StudyPlay"><span class="xmark">✕</span> <span class="backtxt">ВЫХОД →</span></button></div></div><div class="note" style="margin-bottom:12px">Оценка работает прямо внутри StudyPlay.</div><div id="spCalcList"></div><div class="note">Рейтинг = текущая·60% + РК1·20% + РК2·20%.<br>Итог = рейтинг·60% + экзамен·40%.<br>Цвета: 90+ зелёный · 70–89 синий · 50–69 жёлтый · ниже 50 красный · 0/пусто серый. Серые подсказки показывают, сколько нужно набрать, чтобы выйти на 70+ (с запасом — 72).</div></div>';
-  document.body.appendChild(o);
-  o.querySelector('#spCalcX').onclick=()=>{o.style.display='none';document.body.style.overflow=''};
-  o.querySelector('#spCalcAdd').onclick=()=>{st.s.push({name:'',mode:'list',grades:[],avg:'',rk1:'',rk2:'',exam:''});sv();draw();const c=o.querySelectorAll('.cc');c[c.length-1]?.querySelector('[data-f=name]').focus()};
-  o.addEventListener('input',e=>{const c=e.target.closest('.cc');if(!c)return;const f=e.target.dataset.f;if(!f||f==='newg')return;const s=st.s[+c.dataset.i];s[f]=e.target.value;sv();upd(c,s)});
-  const addG=c=>{const s=st.s[+c.dataset.i],inp=c.querySelector('[data-f=newg]'),v=num(inp.value);if(v==null){inp.focus();return}(s.grades=s.grades||[]).push(v);sv();const i=+c.dataset.i;draw();document.querySelector('.cc[data-i="'+i+'"] [data-f=newg]').focus()};
-  o.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.dataset.f==='newg'){e.preventDefault();addG(e.target.closest('.cc'))}});
-  o.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const c=b.closest('.cc'),s=c&&st.s[+c.dataset.i],a=b.dataset.a;
+   :(g?'<div class="cv-chips">'+g+'</div>':'')+'<div class="cv-r"><input data-f="newg" inputmode="decimal" placeholder="Новая оценка (0–100)"><button type="button" class="cv-go" data-a="addg">+</button></div><div class="cv-sm"></div>')
+  +'<div class="cv-g3"><label>РК1<input data-f="rk1" inputmode="decimal" value="'+esc(s.rk1)+'"></label><label>РК2<input data-f="rk2" inputmode="decimal" value="'+esc(s.rk2)+'"></label><label>Экзамен<input data-f="exam" inputmode="decimal" value="'+esc(s.exam)+'"></label></div>'
+  +'<div class="cv-res"><div>Текущая<b data-r="c"></b></div><div>Рейтинг<b data-r="r"></b></div><div>Итог<b data-r="f"></b></div></div><div class="cv-hint"></div></div>'}
+ function draw(){const L=view.querySelector('#cvList');L.innerHTML=st.s.length?st.s.map(card).join(''):'<div class="cv-c"><div class="cv-sm">Предметов пока нет. Нажмите «+ Предмет», внесите оценки, РК1, РК2 — сайт покажет, сколько нужно набрать на экзамене.</div></div>';L.querySelectorAll('.cv-c[data-i]').forEach(c=>upd(c,st.s[+c.dataset.i]))}
+ function build(){
+  view=document.createElement('section');view.id='calcView';view.hidden=true;
+  view.innerHTML='<div class="cv-w"><div class="cv-hd"><div><h2>🎯 Расчёт оценки</h2><p class="cv-sub">Рейтинг = текущая·60% + РК1·20% + РК2·20%; итог = рейтинг·60% + экзамен·40%</p></div><button type="button" class="cv-go" id="cvAdd">+ Предмет</button></div><div id="cvList"></div><div class="cv-note">Цвета: 90+ зелёный · 70–89 синий · 50–69 жёлтый · ниже 50 красный · 0 или пусто серый. Серые подсказки показывают, сколько нужно набрать, чтобы выйти на 70+ (с запасом — 72).</div></div>';
+  document.body.appendChild(view);
+  view.querySelector('#cvAdd').onclick=()=>{st.s.push({name:'',mode:'list',grades:[],avg:'',rk1:'',rk2:'',exam:''});sv();draw();const c=view.querySelectorAll('.cv-c[data-i]');c[c.length-1].querySelector('[data-f=name]').focus()};
+  view.addEventListener('input',e=>{const c=e.target.closest('.cv-c[data-i]');if(!c)return;const f=e.target.dataset.f;if(!f||f==='newg')return;const s=st.s[+c.dataset.i];s[f]=e.target.value;sv();upd(c,s)});
+  const addG=c=>{const s=st.s[+c.dataset.i],inp=c.querySelector('[data-f=newg]'),v=num(inp.value);if(v==null){inp.focus();return}(s.grades=s.grades||[]).push(v);sv();const i=+c.dataset.i;draw();view.querySelector('.cv-c[data-i="'+i+'"] [data-f=newg]').focus()};
+  view.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.dataset.f==='newg'){e.preventDefault();addG(e.target.closest('.cv-c'))}});
+  view.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const c=b.closest('.cv-c'),s=c&&st.s[+c.dataset.i],a=b.dataset.a;
    if(a==='addg')addG(c);else if(a==='delg'){s.grades.splice(+b.dataset.j,1);sv();draw()}
    else if(a==='mode'){s.mode=b.dataset.m;sv();draw()}
-   else if(a==='del'){if(confirm('Удалить предмет «'+(s.name||'без названия')+'»?')){st.s.splice(+c.dataset.i,1);sv();draw()}}})}
-  o.style.display='block';document.body.style.overflow='hidden';draw()}
- document.addEventListener('click',e=>{if(e.target.closest('#navCalc'))open()});
+   else if(a==='del'&&confirm('Удалить предмет «'+(s.name||'без названия')+'»?')){st.s.splice(+c.dataset.i,1);sv();draw()}});
+  document.getElementById('spNav').addEventListener('click',e=>{if(view.hidden)return;if(e.target.closest('#navCalc,#navTheme,#navProfile,#navMore,#moreMenu'))return;if(e.target.closest('.navb,[data-v]'))close()},true)}
+ function close(){if(!view||view.hidden)return;view.hidden=true;const b=document.getElementById('navCalc');if(b)b.classList.remove('on')}
+ function open(){if(!view)build();const nav=document.getElementById('spNav');
+  nav.querySelectorAll('.navb').forEach(b=>b.classList.remove('on'));document.getElementById('navCalc').classList.add('on');
+  if(window.__swClose)window.__swClose();
+  view.style.top=nav.offsetHeight+'px';view.hidden=false;draw();view.scrollTop=0}
+ window.spCalcClose=close;
+ document.addEventListener('click',e=>{if(e.target.closest('#navCalc')){e.stopPropagation();view&&!view.hidden?close():open()}},true);
 })();
 </script>
 </head>
@@ -797,7 +805,7 @@ const STUDYPLAY_GROUPS={
 &lt;question&gt;Введите число 100
 &lt;variant_keyboard&gt;100</pre>
       <h3>Изображения</h3><p>В дизайнере нажмите «Изображение» рядом с вопросом или вариантом. Чтобы переносить картинки между устройствами, используйте экспорт <b>.studyplay.json</b> или текстовый <b>.txt с встроенными данными изображений</b>. Эти форматы сохраняют изображения внутри файла; обычный DOCX экспортируется как текстовая версия.</p>
-      <h3>Импорт и экспорт</h3><p>Можно импортировать TXT, DOCX, JSON проекта StudyPlay или вставить текст напрямую. После создания нажмите «Пройти этот тест». Несколько правильных вариантов оцениваются только если выбраны все правильные и ни одного лишнего. Вопросы с клавиатурой сравнивают ответ без учёта регистра и пробелов по краям.</p>
+      <h3>Тесты курса и личные тесты</h3><p>Тесты, которые автор положил в папку вашей группы, появляются в папках предметов в разделе «Расписание». Свои тесты хранятся только в вашем браузере. Результаты и черновики сохраняются автоматически. Расчёт оценки по рейтингу и экзамену — во вкладке «🎯 Оценка».</p><h3>Импорт и экспорт</h3><p>Можно импортировать TXT, DOCX, JSON проекта StudyPlay или вставить текст напрямую. После создания нажмите «Пройти этот тест». Несколько правильных вариантов оцениваются только если выбраны все правильные и ни одного лишнего. Вопросы с клавиатурой сравнивают ответ без учёта регистра и пробелов по краям.</p>
       <hr style="border:0;border-top:1px solid var(--line);margin:18px 0">
       <h3>🤖 Промпт для ИИ</h3>
       <p>Скопируйте этот промпт в ChatGPT или другой ИИ и прикрепите учебник, конспект либо укажите тему. Промпт объясняет ИИ, как самостоятельно составить тест и оформить вопросы специальными тегами StudyPlay, чтобы результат можно было импортировать в этот сайт.</p>
@@ -2194,7 +2202,7 @@ try{const c=parseInt(localStorage.getItem('studyplay-cnt'));if(c>0)spCnt=c}catch
 const spZone=document.getElementById('testZoneDock'),spDock=document.getElementById('testerDockControls'),spAnchor=document.createComment('zone');
 spZone.before(spAnchor);
 const spNav=document.createElement('nav');spNav.id='spNav';spNav.setAttribute('aria-label','Главное меню');
-spNav.innerHTML='<span class="brand-sm">StudyPlay</span><button type="button" class="navb" data-v="schedule" id="navScheduleHub">📅 Расписание</button><button type="button" class="navb" data-v="home">✍️ Тестер</button><button type="button" class="navb" id="navStopwatch">⏱ Секундомер</button><button type="button" class="navb" id="navCalc">🎯 Оценка</button><div class="navr"><button type="button" class="navb icon" id="navTheme" title="Светлая / тёмная тема" aria-label="Сменить тему">🌓</button><button type="button" class="navb icon" id="navProfile" title="Профиль" aria-label="Профиль">👤</button><button type="button" class="navb" id="navMore" aria-haspopup="true" aria-expanded="false">⋯ Ещё</button><div id="moreMenu" role="menu"><button type="button" data-v="designer">✏️ Дизайнер тестов</button><button type="button" data-v="player" id="navPlayer">▶ Плеер</button><button type="button" data-v="pw" id="navPw">🔑 Ввод пароля</button><hr><button type="button" data-act="sched-load">📤 Загрузить расписание</button><button type="button" data-act="sched-dl">📥 Скачать расписание</button><button type="button" data-act="sched-help">ⓘ Как загрузить расписание</button><hr><button type="button" data-act="gh-refresh">🔔 Проверить обновление расписания</button><button type="button" data-act="accounts">🔐 Логины и пароли GitHub</button><button type="button" data-act="gh-schedule">⬇ Скачать schedule.json</button><button type="button" data-act="gh-manifest">⬇ Скачать manifest.json</button><button type="button" data-act="author">📋 Памятка для автора</button></div></div>';
+spNav.innerHTML='<span class="brand-sm">StudyPlay</span><button type="button" class="navb" data-v="schedule" id="navScheduleHub">📅 Расписание</button><button type="button" class="navb" data-v="home">✍️ Тестер</button><button type="button" class="navb" id="navStopwatch">⏱ Секундомер</button><button type="button" class="navb" id="navCalc">🎯 Оценка</button><div class="navr"><button type="button" class="navb icon" id="navTheme" title="Светлая / тёмная тема" aria-label="Сменить тему">🌓</button><button type="button" class="navb icon" id="navProfile" title="Профиль" aria-label="Профиль">👤</button><button type="button" class="navb" id="navMore" aria-haspopup="true" aria-expanded="false">⋯ Ещё</button><div id="moreMenu" role="menu"><button type="button" data-v="designer">✏️ Дизайнер тестов</button><button type="button" data-v="player" id="navPlayer">▶ Плеер</button><button type="button" data-v="pw" id="navPw">🔑 Ввод пароля</button><hr><button type="button" data-act="sched-load">📤 Загрузить расписание</button><button type="button" data-act="sched-dl">📥 Скачать расписание</button><button type="button" data-act="sched-help">ⓘ Как загрузить расписание</button><hr><button type="button" data-act="gh-refresh">🔄 Обновить данные курса</button><button type="button" data-act="gh-schedule">⬇ Скачать schedule.json</button><button type="button" data-act="gh-manifest">⬇ Скачать manifest.json</button><button type="button" data-act="profile">👤 Профиль / выйти</button><button type="button" data-act="accounts">👥 Логины и пароли (файл)</button><button type="button" data-act="author">📋 Памятка для автора</button></div></div>';
 document.body.prepend(spNav);
 function spGate(open){const g=$('#passwordGate');g.classList.toggle('open',!!open);if(open){const st=$('#passwordStatus');if(!st.textContent){st.style.color='#ffd666';st.textContent='Введите пароль, чтобы открыть плеер'}setTimeout(()=>$('#playerPassword').focus(),30)}}
 function spMark(){const v=document.body.classList.contains('academic-visible')?'schedule':(document.body.classList.contains('player-unlocked')?'player':spView);
@@ -2498,11 +2506,11 @@ const cleanFile=f=>{const {stored,missing,...r}=f;return r};
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function uid(){return 'sp-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8)}
 function toast(msg,type='ok'){const t=$('#toast');t.textContent=msg;t.style.background=type==='error'?'#3b2022':'#203527';t.style.borderColor=type==='error'?'#a94c52':'#3e7950';t.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove('show'),3500)}
-function setPage(p){page=p;const ns=document.querySelector('#academicHub #navSchedule');if(ns)ns.classList.toggle('active',true);render()}
+function setPage(p){page=p;const ns=document.querySelector('#academicHub #navSchedule');if(ns)ns.classList.toggle('active',true);render();if(p==='schedule'){showUpd();checkUpdate()}}
 function getSubject(id){return data.subjects.find(s=>s.id===id)}
 function openSubject(id){selectedShared=null;selectedSubject=id;subjectTab='materials';mineOpen=false;setPage('subjects');window.scrollTo(0,0)}
 function render(){document.getElementById('academicHub').dataset.page=(data.subjects.length||data.shared.length)?page:'schedule';if(!data.subjects.length&&!data.schedule.length&&!data.shared.length){$('#app').innerHTML=`<section class="panel empty"><div class="symbol">▦</div><h1>Расписание пока пусто</h1><p>Загрузите файл расписания StudyPlay (<b>.json</b>, <b>.studyplay</b> или сохранённая HTML-страница расписания <b>.html</b>). В нём хранится всё сразу: расписание, папки предметов, материалы, тесты и заметки. Подготовить файл поможет кнопка «ⓘ Инструкция» вверху.</p><div class="empty-actions"><button class="primary" onclick="document.querySelector('#scheduleInput').click()">Загрузить расписание</button><button id="formatHelp">Посмотреть формат файла</button></div><p class="footer-note">Данные хранятся локально в этом браузере. Для переноса на другое устройство нажмите «Скачать расписание» — в файл попадёт и расписание, и все папки предметов.</p></section>`;$('#formatHelp').onclick=showFormat;return}
- if(!data.subjects.length&&!data.shared.length)page='schedule';if(page==='schedule')renderSchedule();else renderSubjects()}
+ if(!data.subjects.length&&!data.shared.length)page='schedule';if(page==='schedule')renderSchedule();else renderSubjects();showUpd()}
 /* ===== Расписание (сетка Platonus, масштаб) и окно «Предметы» с файлами сокурсника ===== */
 const UIKEY='studyplay-sched-ui-v2',ZMIN=.3,ZMAX=2.5;
 let schRoot=null,schView=null,schWrap=null,schZoom=null,selectedShared=null;
@@ -2854,11 +2862,11 @@ let base=null;try{base=JSON.parse(localStorage.getItem(BASEKEY)||'null')}catch(e
 function buildBase(man,sch){man=man||{};sch=sch||{};const files=[];
  (Array.isArray(man.files)?man.files:[]).forEach(f=>{if(f&&f.name)files.push(f)});
  (Array.isArray(man.links)?man.links:[]).forEach(l=>{if(l&&l.url)files.push({...l,kind:'link',name:l.name||l.url})});
- return{version:String(man.version||sch.version||''),updatedAt:String(man.updatedAt||sch.updatedAt||''),fetchedAt:Date.now(),timeSlots:Array.isArray(sch.timeSlots)&&sch.timeSlots.length?sch.timeSlots:null,subjects:Array.isArray(sch.subjects)?sch.subjects:(Array.isArray(man.subjects)?man.subjects:[]),schedule:Array.isArray(sch.schedule)?sch.schedule:[],files}}
+ return{version:String(man.version||sch.version||''),fetchedAt:Date.now(),timeSlots:Array.isArray(sch.timeSlots)&&sch.timeSlots.length?sch.timeSlots:null,subjects:Array.isArray(sch.subjects)?sch.subjects:(Array.isArray(man.subjects)?man.subjects:[]),schedule:Array.isArray(sch.schedule)?sch.schedule:[],files}}
 async function fetchBase(){
  if(location.protocol==='file:'||!navigator.onLine)return null;
  try{
-  const get=async u=>{try{const sep=u.includes('?')?'&':'?';const r=await fetch(u+sep+'spv='+Date.now(),{cache:'no-store',headers:{'Cache-Control':'no-cache'}});return r.ok?await r.json():null}catch(e){return null}};
+  const get=async u=>{try{const r=await fetch(u,{cache:'no-cache'});return r.ok?await r.json():null}catch(e){return null}};
   const gd=window.SP_GROUP_DIR?'data/'+window.SP_GROUP_DIR+'/':'data/';let[man,sch]=await Promise.all([get(gd+'manifest.json'),get(gd+'schedule.json')]);
    if(!man&&!sch&&window.SP_LEGACY&&gd!=='data/')[man,sch]=await Promise.all([get('data/manifest.json'),get('data/schedule.json')]);
   if(!man&&!sch)return null;
@@ -2889,26 +2897,21 @@ function applyBase(){
   data.timeSlots=B.timeSlots&&B.timeSlots.length?B.timeSlots:DEFAULT_TIMES.map((t,i)=>({id:'slot'+i,start:t[0],end:t[1]}));
   data.schedule=(B.schedule||[]).map(l=>({...l,subjectId:idMap.get(l.subjectId)||l.subjectId}))}
  data.baseVersion=B.version||''}
+let pendBase=null,updLater=false,lastChk=0;
+const baseChanged=r=>!base||base.version!==r.version||(!r.version&&JSON.stringify([base.schedule,base.files])!==JSON.stringify([r.schedule,r.files]));
+async function checkUpdate(){if(Date.now()-lastChk<60000)return;lastChk=Date.now();const r=await fetchBase();if(!r||!base)return;if(baseChanged(r)){pendBase=r;updLater=false;showUpd()}}
+function showUpd(){document.getElementById('baseUpd')?.remove();if(!pendBase||updLater||page!=='schedule')return;const a=document.getElementById('app');if(!a)return;
+ a.insertAdjacentHTML('afterbegin','<div id="baseUpd" class="notice" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between"><span>🔔 Пришло новое расписание'+(pendBase.version?' (версия '+esc(pendBase.version)+')':'')+'. Обновить?</span><span style="display:flex;gap:6px"><button type="button" class="primary" id="baseUpdGo">Обновить</button><button type="button" id="baseUpdLater">Позже</button></span></div>');
+ $('#baseUpdGo').onclick=()=>{base=pendBase;pendBase=null;try{localStorage.setItem(BASEKEY,JSON.stringify(base))}catch(e){}closeMatMenu();applyBase();render();toast('Расписание обновлено'+(base.version?' (версия '+base.version+')':'')+'. Ваши заметки и ссылки не тронуты.')};
+ $('#baseUpdLater').onclick=()=>{updLater=true;document.getElementById('baseUpd')?.remove()}}
 async function refreshBase(manual){
  const r=await fetchBase();
  if(!r){if(manual)toast('Не удалось загрузить данные курса (нет сети или сайт открыт локально). Используются сохранённые.','error');return}
- const changed=!base||base.version!==r.version||base.updatedAt!==r.updatedAt||JSON.stringify([base.schedule,base.files])!==JSON.stringify([r.schedule,r.files]);
+ const changed=!base||base.version!==r.version||(!r.version&&JSON.stringify([base.schedule,base.files])!==JSON.stringify([r.schedule,r.files]));
  if(!changed&&!manual)return;
- base=r;try{localStorage.setItem(BASEKEY,JSON.stringify(base))}catch(e){}
+ pendBase=null;base=r;try{localStorage.setItem(BASEKEY,JSON.stringify(base))}catch(e){}
  closeMatMenu();applyBase();render();
  toast(changed?'Данные курса обновлены'+(r.version?' (версия '+r.version+')':'')+'. Ваши заметки и ссылки не тронуты.':'Данные курса актуальны')}
-let pendingCourseBase=null;
-async function checkCourseUpdates(){
- const r=await fetchBase();
- if(!r){toast('Не удалось проверить расписание: нет сети или GitHub недоступен.','error');return}
- const changed=!base||base.version!==r.version||base.updatedAt!==r.updatedAt||JSON.stringify([base.schedule,base.files])!==JSON.stringify([r.schedule,r.files]);
- if(!changed){toast('Новое расписание не найдено. Текущая версия актуальна.');return}
- pendingCourseBase=r;
- const oldV=base&&base.version?base.version:'неизвестно',newV=r.version||'без версии';
- const box=modal('🔔 Новое расписание',`<p>Доступна новая версия расписания для группы <b>${esc(window.SP_GROUP||'')}</b>.</p><p>Сейчас: <code>${esc(oldV)}</code><br>Новая версия: <code>${esc(newV)}</code></p><p class="note">Ваши личные заметки, ссылки и локальные материалы не будут удалены.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="pri" id="applyNewCourse">✅ Обновить расписание</button><button type="button" id="keepOldCourse">Оставить как есть</button></div>`);
- box.el.querySelector('#applyNewCourse').onclick=()=>{base=pendingCourseBase;pendingCourseBase=null;try{localStorage.setItem(BASEKEY,JSON.stringify(base))}catch(e){}applyBase();render();box.close();toast('Расписание обновлено до версии '+(base.version||'без версии'))};
- box.el.querySelector('#keepOldCourse').onclick=()=>{pendingCourseBase=null;box.close();toast('Старое расписание оставлено')};
-}
 function useCourse(){
  if(!confirm('Показать расписание курса? Ваше личное расписание будет убрано. Предметы, материалы, ссылки, тесты и заметки сохранятся.'))return;
  data.scheduleOwn=false;data.schedule=[];applyBase();save();render();toast('Показано расписание курса')}
@@ -2921,11 +2924,11 @@ function exportGithub(which){
  for(const s of data.subjects){const dir=safe(cleanName(s.name));
   for(const[arr,kind]of[[s.materials,'material'],[s.tests,'test']])for(const f of arr||[]){
    if(f.kind==='link')files.push({subject:s.name,kind:'link',name:f.name,url:f.url,note:f.note||''});
-   else files.push({subject:s.name,kind,name:f.name,path:f.base&&f.path?f.path:`data/files/${dir}/${f.name}`,size:f.size||0})}}
+   else files.push({subject:s.name,kind,name:f.name,path:f.base&&f.path?f.path:`data/${window.SP_GROUP_DIR?window.SP_GROUP_DIR+'/':''}files/${dir}/${f.name}`,size:f.size||0})}}
  const sched={version:ver,updatedAt:new Date().toISOString(),timeSlots:data.timeSlots,subjects:data.subjects.map(s=>({id:s.id,code:s.code||'',name:s.name,teacher:s.teacher||''})),schedule:data.schedule};
- if(which==='manifest'){downloadText(JSON.stringify({version:ver,files},null,2),'manifest.json','application/json');toast('Скачан manifest.json (версия '+ver+'). Положите его в папку data/'+(window.SP_GROUP_DIR||'')+'/ репозитория, а сами файлы — в data/files/<предмет>/.')}
+ if(which==='manifest'){downloadText(JSON.stringify({version:ver,files},null,2),'manifest.json','application/json');toast('Скачан manifest.json (версия '+ver+'). Положите его в папку data/'+(window.SP_GROUP_DIR||'')+'/ репозитория, а сами файлы — в data/'+(window.SP_GROUP_DIR||'')+'/files/<предмет>/.')}
  else{downloadText(JSON.stringify(sched,null,2),'schedule.json','application/json');toast('Скачан schedule.json (версия '+ver+'). Положите его в папку data/'+(window.SP_GROUP_DIR||'')+'/ репозитория.')}}
-window.studyPlayHub={refreshBase,checkCourseUpdates,useCourse,exportGithub,infoModal};
+window.studyPlayHub={refreshBase,useCourse,exportGithub,infoModal};
 
 /* ===== v3: безопасный импорт (слияние); сначала проверка, потом применение ===== */
 $('#scheduleInput').addEventListener('change',async e=>{
@@ -3028,7 +3031,7 @@ $('#scheduleHelpBtn').onclick=showScheduleHelp;
 
 function showScheduleHelp(){
  const prompt='Ты — помощник по составлению расписания занятий для StudyPlay. На основе прикреплённого фото, скриншота, PDF, Word, Excel или текста извлеки расписание без выдумывания отсутствующих данных. Верни ТОЛЬКО корректный JSON без Markdown в формате: {"version":1,"timeSlots":[{"id":"slot1","start":"08:30:00","end":"09:20:00"}],"subjects":[{"id":"subject-1","code":"CS-101","name":"Название предмета","teacher":"ФИО преподавателя","materials":[],"tests":[],"notes":""}],"schedule":[{"id":"lesson-1","day":0,"slotId":"slot1","subjectId":"subject-1","code":"CS-101","name":"Название предмета","kind":"Лекция","room":"Аудитория","building":"Корпус","teacher":"ФИО преподавателя"}]}. day: 0 понедельник, 1 вторник, 2 среда, 3 четверг, 4 пятница, 5 суббота. Создай отдельный timeSlot для каждого времени пары, используй одинаковый slotId для одинаковых временных интервалов. Создай один объект subject на каждый уникальный предмет и используй его subjectId во всех занятиях этого предмета. Если поле не видно, оставь пустую строку или явно укажи в notes, что оно неразборчиво. Не добавляй занятий, которых нет в источнике. Верни только JSON.';
- $('#app').insertAdjacentHTML('beforeend',`<div id="modalShade" style="position:fixed;inset:0;background:#000b;z-index:500;display:grid;place-items:center;padding:16px"><section class="panel" style="width:min(760px,100%);max-height:90vh;overflow:auto;margin:0"><div class="subject-title"><div><h2 style="margin:0">Как подготовить расписание</h2><div class="muted">Подсказка скрыта в этой кнопке и не мешает таблице</div></div><button id="closeScheduleHelp">✕</button></div><ol><li>Открой ChatGPT или другой ИИ и прикрепи фото, PDF, Word, Excel либо вставь текст расписания.</li><li>Нажми «Скопировать промпт» ниже и отправь его вместе с исходником.</li><li>Попроси ИИ сохранить ответ как JSON. Загрузи файл кнопкой «Загрузить расписание».</li><li>Перед импортом проверь дни недели, время, аудитории и названия предметов. Скачивай копию расписания перед крупными изменениями.</li></ol><div class="notice">Для импорта нужен JSON с массивами <code>schedule</code> и <code>timeSlots</code>. Если файл содержит также <code>subjects</code>, StudyPlay импортирует и папки предметов. Кнопка «Скачать расписание» сохраняет в один файл и расписание, и все папки предметов (материалы, тесты, заметки).</div><label>Промпт для ИИ</label><textarea id="schedulePromptText" style="min-height:220px">${esc(prompt)}</textarea><div class="form-actions"><button class="primary" id="copySchedulePrompt">📋 Скопировать промпт</button><button id="downloadSchedulePrompt">↓ Скачать промпт .txt</button><button id="downloadScheduleTemplate">↓ Скачать шаблон JSON</button></div></section></div>`);
+ $('#app').insertAdjacentHTML('beforeend',`<div id="modalShade" style="position:fixed;inset:0;background:#000b;z-index:500;display:grid;place-items:center;padding:16px"><section class="panel" style="width:min(760px,100%);max-height:90vh;overflow:auto;margin:0"><div class="subject-title"><div><h2 style="margin:0">Как подготовить расписание</h2><div class="muted">Подсказка скрыта в этой кнопке и не мешает таблице</div></div><button id="closeScheduleHelp">✕</button></div><ol><li>Открой ChatGPT или другой ИИ и прикрепи фото, PDF, Word, Excel либо вставь текст расписания.</li><li>Нажми «Скопировать промпт» ниже и отправь его вместе с исходником.</li><li>Попроси ИИ сохранить ответ как JSON. Загрузи файл кнопкой «Загрузить расписание».</li><li>Это ваше личное расписание: оно хранится только в этом браузере и важнее группового. Групповое расписание приходит от автора через GitHub (кнопка «↺ Расписание курса» вернёт его).</li><li>Перед импортом проверь дни недели, время, аудитории и названия предметов. Скачивай копию расписания перед крупными изменениями.</li></ol><div class="notice">Для импорта нужен JSON с массивами <code>schedule</code> и <code>timeSlots</code>. Если файл содержит также <code>subjects</code>, StudyPlay импортирует и папки предметов. Кнопка «Скачать расписание» сохраняет в один файл и расписание, и все папки предметов (материалы, тесты, заметки).</div><label>Промпт для ИИ</label><textarea id="schedulePromptText" style="min-height:220px">${esc(prompt)}</textarea><div class="form-actions"><button class="primary" id="copySchedulePrompt">📋 Скопировать промпт</button><button id="downloadSchedulePrompt">↓ Скачать промпт .txt</button><button id="downloadScheduleTemplate">↓ Скачать шаблон JSON</button></div></section></div>`);
  $('#closeScheduleHelp').onclick=()=>$('#modalShade')?.remove();$('#copySchedulePrompt').onclick=async()=>{try{await navigator.clipboard.writeText(prompt);toast('Промпт скопирован')}catch(e){$('#schedulePromptText').select();toast('Выделите текст и скопируйте вручную')}};$('#downloadSchedulePrompt').onclick=()=>downloadText(prompt,'studyplay-schedule-prompt.txt','text/plain');$('#downloadScheduleTemplate').onclick=()=>{const ex={version:1,timeSlots:[{id:'slot1',start:'08:30:00',end:'09:20:00'}],subjects:[{id:'subject-1',code:'CS-101',name:'Название предмета',teacher:'',materials:[],tests:[],notes:''}],schedule:[{id:'lesson-1',day:0,slotId:'slot1',subjectId:'subject-1',code:'CS-101',name:'Название предмета',kind:'Лекция',room:'',building:'',teacher:''}]};downloadText(JSON.stringify(ex,null,2),'studyplay-schedule-template.json','application/json')};
 }
 $('#navSchedule').onclick=()=>{document.body.classList.add('academic-hub-active','academic-visible');setPage('schedule');document.getElementById('academicHub').hidden=false;};
@@ -3052,7 +3055,7 @@ applyTheme();
 applyBase();
 render();
 ensureIDB().then(hydrate);
-// Расписание НЕ проверяется автоматически. Проверка запускается только через «⋯ Ещё».
+if(!base)refreshBase(false);
 setTimeout(()=>{const b=document.getElementById('navScheduleHub');if(b&&!document.body.classList.contains('player-unlocked'))b.click()},0);
 
 window.studyPlayAcademic={setPage:setPage,render:render,openSubject:openSubject};
@@ -3157,7 +3160,6 @@ code.ic{background:#0d1117;color:#e6edf3;padding:1px 6px;border-radius:5px;font:
 .otx,.qot{min-width:0;flex:1}
 .otx .tx,.qot .tx{display:inline}
 .oprow textarea{flex:1;min-width:0;margin:0;min-height:42px;resize:vertical}
-@media(max-width:700px){.acc-row{grid-template-columns:1fr 1fr!important}.acc-row button{grid-column:auto}}
 </style>
 <script id="v3-global">
 (function(){
@@ -3179,41 +3181,38 @@ function modal(title,html,onClose){
  o.querySelector('.sp-modal-x').onclick=close;o.addEventListener('click',e=>{if(e.target===o)close()});
  return{el:o,close}}
 /* --- памятка автора --- */
-function downloadBlobText(text,name,type='application/json'){
- const blob=new Blob([text],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)
-}
-function normalizeAccounts(arr){
- const out=[],seen=new Set();
- for(const a of Array.isArray(arr)?arr:[]){if(!a||!String(a.login||'').trim())continue;const login=String(a.login).trim(),key=login.toLowerCase();if(seen.has(key))continue;seen.add(key);out.push({login,password:String(a.password??''),group:String(a.group||''),folder:String(a.folder||''),name:String(a.name||login)})}
- return out
-}
-function accountsManager(){
- const current=normalizeAccounts(STUDYPLAY_ACCOUNTS);
- const m=modal('🔐 Логины и пароли GitHub',`<p style="margin-top:0">Теперь список пользователей можно хранить отдельно от <code>index.html</code>. Файл называется <code>accounts.json</code> и кладётся в <code>data/accounts.json</code>. Поле <b>Папка GitHub</b> обязательно для точного выбора расписания: <code>ИР-252 → ir-252</code>, <code>ИК-252 → ik-252</code>.</p>
- <div class="sp-modal-actions" style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0"><button type="button" id="accAdd">+ Добавить пользователя</button><button type="button" id="accImport">📂 Объединить со старым accounts.json</button><button type="button" id="accDownload">⬇ Скачать accounts.json</button><button type="button" id="accDefault">↩ Восстановить список из index.html</button></div>
- <input id="accFile" type="file" accept=".json,application/json" hidden>
- <div id="accRows"></div>
- <p class="note">При объединении одинаковые логины не дублируются: остаётся первая запись. Старый файл не удаляется. После скачивания замените <code>data/accounts.json</code> в GitHub. Важно: GitHub Pages — публичный статический сайт, поэтому эти пароли не являются секретными.</p>`);
- const root=m.el,rows=root.querySelector('#accRows');
- function draw(){const arr=normalizeAccounts(current);rows.innerHTML=arr.map((a,i)=>`<div class="acc-row" data-i="${i}" style="display:grid;grid-template-columns:1.1fr 1fr .8fr 1.1fr auto;gap:6px;margin:7px 0"><input data-k="login" value="${esc(a.login)}" placeholder="Логин"><input data-k="password" value="${esc(a.password)}" placeholder="Пароль"><input data-k="group" value="${esc(a.group)}" placeholder="Группа"><input data-k="folder" value="${esc(a.folder||'')}" placeholder="Папка GitHub"><input data-k="name" value="${esc(a.name)}" placeholder="Имя"><button type="button" data-del="1">×</button></div>`).join('')||'<div class="note">Пользователей пока нет.</div>'}
- function sync(){current.splice(0,current.length,...normalizeAccounts([...rows.querySelectorAll('.acc-row')].map(r=>Object.fromEntries([...r.querySelectorAll('input')].map(i=>[i.dataset.k,i.value])))))}
- rows.addEventListener('input',sync);rows.addEventListener('click',e=>{if(e.target.closest('[data-del]')){e.target.closest('.acc-row').remove();sync();}});
- root.querySelector('#accAdd').onclick=()=>{current.push({login:'',password:'',group:'',folder:'',name:''});draw();rows.lastElementChild?.querySelector('input')?.focus()};
- root.querySelector('#accDownload').onclick=()=>{sync();const payload={format:'StudyPlay-Accounts',version:1,updatedAt:new Date().toISOString(),accounts:normalizeAccounts(current)};downloadBlobText(JSON.stringify(payload,null,2),'accounts.json');};
- root.querySelector('#accDefault').onclick=()=>{current.splice(0,current.length,...normalizeAccounts(STUDYPLAY_DEFAULT_ACCOUNTS));draw()};
- const fi=root.querySelector('#accFile');root.querySelector('#accImport').onclick=()=>fi.click();fi.onchange=async()=>{const f=fi.files[0];fi.value='';if(!f)return;try{const x=JSON.parse(await f.text()),incoming=Array.isArray(x)?x:x.accounts;const merged=normalizeAccounts([...current,...(incoming||[])]);current.splice(0,current.length,...merged);draw();toast('Старые и новые логины объединены без дублей')}catch(e){toast('Не удалось прочитать accounts.json','error')}};
- draw();
-}
-function authorGuide(){modal('📋 Памятка для автора GitHub',`<h3>1. Логины и пароли</h3><p>Откройте «⋯ Ещё» → «🔐 Логины и пароли GitHub». Там можно добавлять пользователей, удалять их, объединять новый список со старым и скачать готовый <code>accounts.json</code>.</p><p>В GitHub создайте <code>data/accounts.json</code>. Сайт сначала пытается загрузить этот файл. Если его нет, используется встроенный список из <code>index.html</code>.</p><h3>2. Группы и отдельное расписание</h3><p>Для каждой группы добавьте запись в <code>STUDYPLAY_GROUPS</code>, например <code>'ИР-252':{dir:'ir-252'}</code>. Затем создайте папку <code>data/ir-252/</code> и положите туда <code>schedule.json</code>. Для другой группы используйте другую папку, например <code>data/ik-252/</code>.</p><p>Пользователь из ИР-252 получает расписание из <code>data/ir-252/schedule.json</code>, а пользователь ИК-252 — из своей папки. Список групп и логины связаны полем <code>group</code>.</p><h3>3. Как обновлять расписание</h3><p>Сайт больше <b>не спрашивает об обновлении автоматически</b>. Пользователь сам открывает «⋯ Ещё» → «🔔 Проверить обновление расписания». Если версия на GitHub новее, появится уведомление. Только после нажатия «Обновить» новое расписание применяется.</p><h3>4. Формат schedule.json</h3><p>Используйте поля <code>version</code>, <code>updatedAt</code>, <code>timeSlots</code>, <code>subjects</code>, <code>schedule</code>. При новом расписании обязательно меняйте <code>version</code>, например <code>2026-10-22.1</code> → <code>2026-10-23.1</code>.</p><h3>5. Материалы и тесты</h3><p>Материалы предметов и тесты можно размещать через <code>manifest.json</code> и папки <code>data/files/&lt;предмет&gt;/</code>. Для тестера актуальная инструкция находится прямо во вкладке «Тестер» → 📘 Инструкция; старые подсказки нужно считать заменёнными этой версией.</p><h3>6. Оценка</h3><p>Раздел «🎯 Оценка» открывается внутри StudyPlay, без перехода на другой сайт. Предметы добавляются вручную. Оценки сохраняются отдельно для каждого логина.</p><h3>7. Важно</h3><p>GitHub Pages — публичный статический сайт. <b>accounts.json не является защищённым хранилищем.</b> Не используйте реальные пароли от Platonus, почты или других важных сервисов.</p><div class="notice">Порядок для новой группы: <b>1)</b> добавить группу → <b>2)</b> создать её папку → <b>3)</b> положить schedule.json → <b>4)</b> добавить пользователей в accounts.json → <b>5)</b> сделать push в GitHub.</div>`)}
+function authorGuide(){modal('Памятка для автора: логины, группы и расписание на GitHub',`<h3 style="margin:0 0 6px">1. Логины, пароли и группы</h3><ol>
+<li>Откройте «⋯ Ещё» → <b>👥 Логины и пароли (файл)</b> (или 👤 Профиль → тот же пункт). В списке сразу есть все учётки, которые сайт уже знает, — старые не потеряются.</li>
+<li>Добавьте строки: <b>логин, пароль, группа</b> (например <code>ИР-252</code>), <b>папка</b> (например <code>ir-252</code> — сайт подставляет её сам, но вы можете изменить) и имя. Если у вас есть старый файл — «📥 Объединить с файлом…»; текущий файл с GitHub подтягивает «☁ Подтянуть с GitHub».</li>
+<li>Нажмите <b>⬇ Скачать accounts.json</b> и загрузите его в репозиторий как <code>data/accounts.json</code> (замена файла). Сделайте <code>git push</code>.</li>
+<li>Через 1–2 минуты новые логины работают. Человек входит один раз — сайт его запоминает; выйти можно в 👤 Профиль.</li></ol>
+<h3 style="margin:14px 0 6px">2. Расписание для каждой группы</h3><ol>
+<li>У каждой группы своя папка, её имя записано в <code>accounts.json</code> в поле <code>"folder"</code>: <code>ИР-252</code> → <code>ir-252</code> → <code>data/ir-252/</code>, <code>ИК-252</code> → <code>ik-252</code> → <code>data/ik-252/</code>. Папка пишется латиницей (a-z, цифры, дефис); путь видно под каждой строкой в окне «Логины и пароли». Создавайте на GitHub папку с точно таким именем.</li>
+<li>В папку кладётся <code>schedule.json</code> и, если нужно, <code>manifest.json</code> (материалы, тесты, ссылки). Получить файлы: «⋯ Ещё» → «⬇ Скачать schedule.json» / «⬇ Скачать manifest.json» (подготовьте расписание группы на сайте и скачайте).</li>
+<li>Люди из одной группы видят одно расписание, из другой — другое. Одинаковые предметы не мешают — у каждой группы свой файл. Новая группа = новая строка в логинах + новая папка.</li>
+<li>Материалы группы: <code>data/&lt;папка группы&gt;/files/&lt;предмет&gt;/файл</code>; путь прописывается в <code>manifest.json</code>.</li></ol>
+<pre style="white-space:pre-wrap;background:rgba(127,127,127,.15);padding:10px;border-radius:8px;font-size:12px">index.html
+data/
+  accounts.json          ← логины, пароли, группы, папки
+  ir-252/
+    schedule.json        ← расписание ИР-252
+    manifest.json        ← версия, файлы, ссылки
+    files/Философия/Лекция 1.pdf
+  ik-252/
+    schedule.json        ← расписание ИК-252</pre>
+<h3 style="margin:14px 0 6px">3. Как студенты получают обновление</h3><ol>
+<li>Поменяйте файлы группы, <b>обязательно измените <code>"version"</code></b> (например <code>2026-10-12.1</code> → <code>2026-10-19.1</code>; сайт при скачивании делает это сам) и сделайте <code>git push</code>.</li>
+<li>Расписание не обновляется само и ничего не навязывает. Когда студент заходит во вкладку «Расписание», сайт проверяет версию, и если пришло новое, наверху появляется уведомление «🔔 Пришло новое расписание» с кнопками «Обновить» / «Позже». Вручную: «⋯ Ещё» → «🔄 Обновить данные курса».</li>
+<li>Личные данные студентов (заметки, свои ссылки, закрепления, собственное расписание, оценки в «🎯 Оценка») не стираются.</li></ol>
+<p style="opacity:.8"><b>Важно.</b> GitHub Pages — статический сайт: логины и пароли лежат в открытом виде в <code>accounts.json</code>, поэтому это разделение «кто какую группу видит», а не защита. Не используйте реальные пароли от других сервисов. Если сайт открыт как файл (file://) или нет интернета, используются последние сохранённые данные. Автозагрузка с timetable.kgu.kz и platonus.kgu.kz в планах: нужен небольшой прокси (например Cloudflare Worker), браузер сам войти на чужой сайт не может.</p>`)}
 menu.addEventListener('click',e=>{const b=e.target.closest('[data-act]');closeMore();if(!b)return;const a=b.dataset.act,H=window.studyPlayHub||{};
  if(a==='sched-load'){toSchedule();document.getElementById('scheduleInput').click()}
  else if(a==='sched-dl'){toSchedule();document.getElementById('downloadScheduleBtn').click()}
  else if(a==='sched-help'){toSchedule();document.getElementById('scheduleHelpBtn').click()}
  else if(a==='gh-schedule'){if(H.exportGithub)H.exportGithub('schedule')}
  else if(a==='gh-manifest'){if(H.exportGithub)H.exportGithub('manifest')}
- else if(a==='gh-refresh'){if(H.checkCourseUpdates)H.checkCourseUpdates()}
- else if(a==='accounts'){accountsManager()}
- else if(a==='author'){authorGuide()}});
+ else if(a==='gh-refresh'){if(H.refreshBase)H.refreshBase(true)}
+ else if(a==='author'){authorGuide()}else if(a==='accounts'){if(window.spAccounts)window.spAccounts()}else if(a==='profile'){document.getElementById('navProfile').click()}});
  
 })();
 </script>
@@ -3272,14 +3271,12 @@ setInterval(paint,250);paint();
 })();
 </script>
 <!--
-ПАМЯТКА ДЛЯ АВТОРА: обновление контента через GitHub
-1. Расписание группы: замените data/<папка-группы>/schedule.json в репозитории. Например для ИР-252 это data/ir-252/schedule.json.
-2. Материалы и тесты: загрузите новые файлы в указанные пути из data/<папка-группы>/manifest.json.
-3. Манифест группы: положите его рядом с расписанием: data/<папка-группы>/manifest.json и ОБЯЗАТЕЛЬНО измените "version"
-   (например, "2026-10-12.1" → "2026-10-19.1"), чтобы приложения студентов заметили обновление.
-4. Публикация: git push в ветку main / gh-pages — GitHub Pages обновится за 1–2 минуты.
-   Личные данные студентов (заметки, ссылки, закрепления, собственное расписание) не стираются.
-Эта же памятка — в меню «⋯ Ещё» → «Памятка для автора».
+ПАМЯТКА ДЛЯ АВТОРА (полная версия — в меню «⋯ Ещё» → «Памятка для автора»)
+1. Логины/пароли/группы: «⋯ Ещё» → «Логины и пароли (файл)» → «Скачать accounts.json» → положить в data/accounts.json → git push.
+2. Расписание группы: data/<группа латиницей>/schedule.json и manifest.json (ИР-252 → data/ir-252/, ИК-252 → data/ik-252/).
+3. При каждом обновлении меняйте "version" (например 2026-10-12.1 → 2026-10-19.1). Студенты увидят уведомление во вкладке «Расписание».
+4. Материалы: data/<папка группы>/files/<предмет>/.
+5. GitHub Pages статический: пароли в accounts.json видны всем — это не защита.
 -->
 </body>
 </html>
