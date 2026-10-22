@@ -580,7 +580,7 @@ const STUDYPLAY_GROUPS={
   let saved=null;try{saved=JSON.parse(localStorage.getItem(AK)||'null')}catch(e){}
   const savedAcc=saved&&findAcc(saved.login);
   if(savedAcc){
-    const g=grp(savedAcc.group);window.SP_AUTH={login:savedAcc.login,name:savedAcc.name||savedAcc.login,group:g.name};window.SP_GROUP=g.name;window.SP_GROUP_DIR=g.dir;window.SP_LEGACY=!!g.legacy;
+    const g=grp(savedAcc.group,savedAcc.folder);window.SP_AUTH={login:savedAcc.login,name:savedAcc.name||savedAcc.login,group:g.name,folder:g.dir};window.SP_GROUP=g.name;window.SP_GROUP_DIR=g.dir;window.SP_LEGACY=!!g.legacy;
   }else{
     try{localStorage.removeItem(AK)}catch(e){}
     window.SP_AUTH=null;loginUI();
@@ -2854,11 +2854,11 @@ let base=null;try{base=JSON.parse(localStorage.getItem(BASEKEY)||'null')}catch(e
 function buildBase(man,sch){man=man||{};sch=sch||{};const files=[];
  (Array.isArray(man.files)?man.files:[]).forEach(f=>{if(f&&f.name)files.push(f)});
  (Array.isArray(man.links)?man.links:[]).forEach(l=>{if(l&&l.url)files.push({...l,kind:'link',name:l.name||l.url})});
- return{version:String(man.version||sch.version||''),fetchedAt:Date.now(),timeSlots:Array.isArray(sch.timeSlots)&&sch.timeSlots.length?sch.timeSlots:null,subjects:Array.isArray(sch.subjects)?sch.subjects:(Array.isArray(man.subjects)?man.subjects:[]),schedule:Array.isArray(sch.schedule)?sch.schedule:[],files}}
+ return{version:String(man.version||sch.version||''),updatedAt:String(man.updatedAt||sch.updatedAt||''),fetchedAt:Date.now(),timeSlots:Array.isArray(sch.timeSlots)&&sch.timeSlots.length?sch.timeSlots:null,subjects:Array.isArray(sch.subjects)?sch.subjects:(Array.isArray(man.subjects)?man.subjects:[]),schedule:Array.isArray(sch.schedule)?sch.schedule:[],files}}
 async function fetchBase(){
  if(location.protocol==='file:'||!navigator.onLine)return null;
  try{
-  const get=async u=>{try{const r=await fetch(u,{cache:'no-cache'});return r.ok?await r.json():null}catch(e){return null}};
+  const get=async u=>{try{const sep=u.includes('?')?'&':'?';const r=await fetch(u+sep+'spv='+Date.now(),{cache:'no-store',headers:{'Cache-Control':'no-cache'}});return r.ok?await r.json():null}catch(e){return null}};
   const gd=window.SP_GROUP_DIR?'data/'+window.SP_GROUP_DIR+'/':'data/';let[man,sch]=await Promise.all([get(gd+'manifest.json'),get(gd+'schedule.json')]);
    if(!man&&!sch&&window.SP_LEGACY&&gd!=='data/')[man,sch]=await Promise.all([get('data/manifest.json'),get('data/schedule.json')]);
   if(!man&&!sch)return null;
@@ -2892,7 +2892,7 @@ function applyBase(){
 async function refreshBase(manual){
  const r=await fetchBase();
  if(!r){if(manual)toast('Не удалось загрузить данные курса (нет сети или сайт открыт локально). Используются сохранённые.','error');return}
- const changed=!base||base.version!==r.version||(!r.version&&JSON.stringify([base.schedule,base.files])!==JSON.stringify([r.schedule,r.files]));
+ const changed=!base||base.version!==r.version||base.updatedAt!==r.updatedAt||JSON.stringify([base.schedule,base.files])!==JSON.stringify([r.schedule,r.files]);
  if(!changed&&!manual)return;
  base=r;try{localStorage.setItem(BASEKEY,JSON.stringify(base))}catch(e){}
  closeMatMenu();applyBase();render();
@@ -2901,7 +2901,7 @@ let pendingCourseBase=null;
 async function checkCourseUpdates(){
  const r=await fetchBase();
  if(!r){toast('Не удалось проверить расписание: нет сети или GitHub недоступен.','error');return}
- const changed=!base||base.version!==r.version||(!r.version&&JSON.stringify([base.schedule,base.files])!==JSON.stringify([r.schedule,r.files]));
+ const changed=!base||base.version!==r.version||base.updatedAt!==r.updatedAt||JSON.stringify([base.schedule,base.files])!==JSON.stringify([r.schedule,r.files]);
  if(!changed){toast('Новое расписание не найдено. Текущая версия актуальна.');return}
  pendingCourseBase=r;
  const oldV=base&&base.version?base.version:'неизвестно',newV=r.version||'без версии';
@@ -3273,9 +3273,9 @@ setInterval(paint,250);paint();
 </script>
 <!--
 ПАМЯТКА ДЛЯ АВТОРА: обновление контента через GitHub
-1. Расписание: отредактируйте data/schedule.json (или меню «⋯ Ещё» → «Скачать schedule.json» / «Скачать manifest.json») и замените файл в репозитории.
-2. Материалы и тесты: загрузите новые файлы (PDF, DOCX, JSON с тестами) в data/files/<название_предмета>/ вашего репозитория.
-3. Манифест: в data/manifest.json пропишите пути, размеры и предмет каждого файла и ОБЯЗАТЕЛЬНО измените "version"
+1. Расписание группы: замените data/<папка-группы>/schedule.json в репозитории. Например для ИР-252 это data/ir-252/schedule.json.
+2. Материалы и тесты: загрузите новые файлы в указанные пути из data/<папка-группы>/manifest.json.
+3. Манифест группы: положите его рядом с расписанием: data/<папка-группы>/manifest.json и ОБЯЗАТЕЛЬНО измените "version"
    (например, "2026-10-12.1" → "2026-10-19.1"), чтобы приложения студентов заметили обновление.
 4. Публикация: git push в ветку main / gh-pages — GitHub Pages обновится за 1–2 минуты.
    Личные данные студентов (заметки, ссылки, закрепления, собственное расписание) не стираются.
