@@ -1,0 +1,25 @@
+{
+  "format": "StudyPlay-Accounts",
+  "version": 1,
+  "updatedAt": "2026-10-22T13:53:19.129Z",
+  "accounts": [
+    {
+      "login": "Ерғали_Алан",
+      "password": "4419",
+      "group": "ИР-252",
+      "name": "Ерғали Алан"
+    },
+    {
+      "login": "1",
+      "password": "1",
+      "group": "ИР-252",
+      "name": "1"
+    },
+    {
+      "login": "2",
+      "password": "2",
+      "group": "ИК-252",
+      "name": "2"
+    }
+  ]
+}
