@@ -1,11 +1,17 @@
 {
-  "format": "StudyPlay-Accounts",
-  "version": 1,
-  "updatedAt": "2026-10-22T14:34:17.802Z",
+  "version": "2026-10-23.1",
+  "updatedAt": "2026-10-22T23:07:40.158Z",
   "accounts": [
     {
-      "login": "3",
-      "password": "3",
+      "login": "Ерғали_Алан",
+      "password": "4419",
+      "group": "ИР-252",
+      "folder": "ir-252",
+      "name": "Ерғали Алан"
+    },
+    {
+      "login": "1",
+      "password": "1",
       "group": "ИР-252",
       "folder": "ir-252",
       "name": "Студент ИР-252"
@@ -16,20 +22,6 @@
       "group": "ИК-252",
       "folder": "ik-252",
       "name": "Студент ИК-252"
-    },
-    {
-      "login": "1",
-      "password": "1",
-      "group": "ИР-252",
-      "folder": "ir-252",
-      "name": "Студент ИР-252"
-    },
-    {
-      "login": "Ерғали_Алан",
-      "password": "4419",
-      "group": "ИР-252",
-      "folder": "",
-      "name": "Ерғали Алан"
     }
   ]
 }
