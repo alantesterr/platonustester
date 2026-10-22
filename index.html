@@ -467,7 +467,7 @@ body.academic-hub-active #academicHub {
 #spAuth input,.spbox input{width:100%;box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid #3a404c;background:#12141a;color:#fff;font-size:16px}
 #spAuth button,.spbox button.pri{padding:12px;border-radius:10px;border:0;background:#5aa2ff;color:#fff;font-size:16px;font-weight:600;cursor:pointer}
 #spAuthErr{color:#ff7b7b;font-size:13px;min-height:16px}
-#spProf,#spAccWin{position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:16px}
+#spProf,#spAccWin,#spPwAsk{position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:16px}
 .spbox .sec{background:#2a2d36;color:#eceff4;border:1px solid #3a404c;padding:10px;border-radius:10px;cursor:pointer;font-size:15px}
 .spbox .out{background:#3a1d1d;color:#ff9a9a;border:1px solid #6b2b2b;padding:12px;border-radius:10px;cursor:pointer;font-size:15px}
 #spAccWin .arow{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr)) 44px;gap:6px;align-items:center;margin-bottom:8px}#spAccWin .arow input{padding:9px;font-size:14px}#spAccWin .arow button{padding:9px}#spAccWin .adir{grid-column:1/-1;color:#7d8492;font-size:11px;margin-top:-3px}#spAccWin .arow2{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}#spAccWin .arow2 button{flex:1 1 auto}
@@ -483,7 +483,7 @@ body.academic-hub-active #academicHub {
 #calcView input:focus{outline:2px solid var(--acc);outline-offset:-1px}
 #calcView .cv-c{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px;display:flex;flex-direction:column;gap:12px}
 #calcView .cv-r{display:flex;gap:8px;align-items:center}#calcView .cv-seg{display:flex;gap:6px;flex-wrap:wrap}
-#calcView .cv-seg button{flex:1 1 140px;font-weight:500;font-size:14px}
+#calcView .cv-seg button{flex:1 1 140px;font-weight:500;font-size:14px;white-space:normal;line-height:1.25}
 #calcView .cv-chips{display:flex;flex-wrap:wrap;gap:6px}#calcView .cv-chip{padding:5px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-size:14px;cursor:pointer}
 #calcView .cv-g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 #calcView label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mute)}
@@ -584,10 +584,16 @@ const STUDYPLAY_GROUPS={'ИР-252':{legacy:true}};
     say('Скачан accounts.json (версия '+out.version+', учёток: '+out.accounts.length+'). Положите его в data/accounts.json репозитория и сделайте git push.');return}});
   o.addEventListener('change',async e=>{if(e.target.id!=='aFile')return;const f=e.target.files[0];if(!f)return;try{const j=JSON.parse(await f.text()),arr=Array.isArray(j)?j:j.accounts;if(!Array.isArray(arr))throw 0;const[n,s]=addNew(arr);draw();say('Из файла «'+f.name+'» добавлено: '+n+(s?', пропущено (логин уже в списке): '+s:'')+'.')}catch(x){say('Не удалось прочитать файл: нужен accounts.json.')}});
   draw()}
- window.spAccounts=accUI;
+ function askPw(next){
+  let m=document.getElementById('spPwAsk');if(m)m.remove();
+  m=E('div','<form class="spbox"><h2>🔑 Пароль доступа</h2><p style="margin:0;color:#9aa3b2;font-size:13px">Логины и пароли доступны после ввода пароля плеера. Если он уже введён — окно открывается само.</p><input type="password" id="spPwIn" placeholder="Пароль плеера" autocomplete="off"><div id="spPwErr" style="color:#ff7b7b;font-size:13px;min-height:16px"></div><button class="pri" type="submit">Открыть</button><button class="sec" type="button" id="spPwX">Отмена</button></form>');m.id='spPwAsk';m.style.display='flex';document.body.appendChild(m);
+  const inp=m.querySelector('#spPwIn');setTimeout(()=>inp.focus(),30);
+  m.addEventListener('click',e=>{if(e.target===m||e.target.id==='spPwX')m.remove()});
+  m.querySelector('form').addEventListener('submit',e=>{e.preventDefault();if(inp.value==='ALAN'){if(window.spPwUnlock)window.spPwUnlock();m.remove();next()}else{m.querySelector('#spPwErr').textContent='Пароль неверный';inp.select()}})}
+ window.spAccounts=()=>{if(window.spPwState&&window.spPwState()){accUI();return}const P=document.getElementById('spProf');if(P)P.style.display='none';askPw(accUI)};
  function profUI(){
   let m=document.getElementById('spProf');if(!m){m=E('div','<div class="spbox"><h2>👤 Профиль</h2><div id="spProfInfo"></div><button class="sec" id="spProfAcc">👥 Логины и пароли (файл)</button><button class="out" id="spOut">Выйти</button><button class="sec" id="spProfClose">Закрыть</button></div>');m.id='spProf';document.body.appendChild(m);
-   m.addEventListener('click',e=>{if(e.target===m||e.target.id==='spProfClose')m.style.display='none';if(e.target.id==='spProfAcc')accUI()});
+   m.addEventListener('click',e=>{if(e.target===m||e.target.id==='spProfClose')m.style.display='none';if(e.target.id==='spProfAcc')window.spAccounts()});
    m.querySelector('#spOut').onclick=()=>{if(!confirm('Выйти из аккаунта?'))return;try{localStorage.removeItem(AK)}catch(x){}location.reload()}}
   const a=window.SP_AUTH||{};m.querySelector('#spProfInfo').innerHTML='<div style="line-height:1.7"><b>'+ea(a.name)+'</b><br>Логин: '+ea(a.login)+'<br>Группа: '+ea(a.group)+'</div>';m.style.display='flex'}
  document.addEventListener('DOMContentLoaded',()=>{if(!window.SP_AUTH)loginUI()});
@@ -621,21 +627,25 @@ const STUDYPLAY_GROUPS={'ИР-252':{legacy:true}};
  function card(s,i){
   const g=(s.grades||[]).map((x,j)=>'<span class="cv-chip '+col(+x)+'" data-a="delg" data-j="'+j+'" title="Удалить оценку">'+esc(x)+' ✕</span>').join('');
   return '<div class="cv-c" data-i="'+i+'"><div class="cv-r"><input data-f="name" value="'+esc(s.name)+'" placeholder="Название предмета"><button type="button" data-a="del" title="Удалить предмет" aria-label="Удалить предмет">🗑</button></div>'
-  +'<div class="cv-seg"><button type="button" data-a="mode" data-m="list" class="'+(s.mode!=='avg'?'on':'')+'">Оценки по одной</button><button type="button" data-a="mode" data-m="avg" class="'+(s.mode==='avg'?'on':'')+'">Средняя числом</button></div>'
+  +'<div class="cv-seg"><button type="button" data-a="mode" data-m="list" class="'+(s.mode!=='avg'?'on':'')+'">Оценки по одной</button><button type="button" data-a="mode" data-m="avg" class="'+(s.mode==='avg'?'on':'')+'">Ввести сразу среднюю текущую</button></div>'
   +(s.mode==='avg'?'<label>Текущая средняя<input data-f="avg" inputmode="decimal" value="'+esc(s.avg)+'" placeholder="0–100"></label>'
    :(g?'<div class="cv-chips">'+g+'</div>':'')+'<div class="cv-r"><input data-f="newg" inputmode="decimal" placeholder="Новая оценка (0–100)"><button type="button" class="cv-go" data-a="addg">+</button></div><div class="cv-sm"></div>')
   +'<div class="cv-g3"><label>РК1<input data-f="rk1" inputmode="decimal" value="'+esc(s.rk1)+'"></label><label>РК2<input data-f="rk2" inputmode="decimal" value="'+esc(s.rk2)+'"></label><label>Экзамен<input data-f="exam" inputmode="decimal" value="'+esc(s.exam)+'"></label></div>'
-  +'<div class="cv-res"><div>Текущая<b data-r="c"></b></div><div>Рейтинг<b data-r="r"></b></div><div>Итог<b data-r="f"></b></div></div><div class="cv-hint"></div></div>'}
+  +'<div class="cv-res"><div>Ср. текущая<b data-r="c"></b></div><div>Рейтинг<b data-r="r"></b></div><div>Итог<b data-r="f"></b></div></div><div class="cv-hint"></div></div>'}
  function draw(){const L=view.querySelector('#cvList');L.innerHTML=st.s.length?st.s.map(card).join(''):'<div class="cv-c"><div class="cv-sm">Предметов пока нет. Нажмите «+ Предмет», внесите оценки, РК1, РК2 — сайт покажет, сколько нужно набрать на экзамене.</div></div>';L.querySelectorAll('.cv-c[data-i]').forEach(c=>upd(c,st.s[+c.dataset.i]))}
  function build(){
   view=document.createElement('section');view.id='calcView';view.hidden=true;
   view.innerHTML='<div class="cv-w"><div class="cv-hd"><div><h2>🎯 Расчёт оценки</h2><p class="cv-sub">Рейтинг = текущая·60% + РК1·20% + РК2·20%; итог = рейтинг·60% + экзамен·40%</p></div><button type="button" class="cv-go" id="cvAdd">+ Предмет</button></div><div id="cvList"></div><div class="cv-note">Цвета: 90+ зелёный · 70–89 синий · 50–69 жёлтый · ниже 50 красный · 0 или пусто серый. Серые подсказки показывают, сколько нужно набрать, чтобы выйти на 70+ (с запасом — 72).</div></div>';
   document.body.appendChild(view);
-  view.querySelector('#cvAdd').onclick=()=>{st.s.push({name:'',mode:'list',grades:[],avg:'',rk1:'',rk2:'',exam:''});sv();draw();const c=view.querySelectorAll('.cv-c[data-i]');c[c.length-1].querySelector('[data-f=name]').focus()};
+  const addSub=name=>{st.s.push({name:name||'',mode:'list',grades:[],avg:'',rk1:'',rk2:'',exam:''});sv();draw();const c=view.querySelectorAll('.cv-c[data-i]'),last=c[c.length-1];last.scrollIntoView({block:'center'});if(!name)last.querySelector('[data-f=name]').focus()};
+  view.querySelector('#cvAdd').onclick=()=>{const old=view.querySelector('#cvPick');if(old){old.remove();return}
+   const subs=(window.studyPlayHub&&window.studyPlayHub.subjects?window.studyPlayHub.subjects():[]).filter(n=>!st.s.some(x=>String(x.name).trim().toLowerCase()===n.toLowerCase()));
+   if(!subs.length){addSub('');return}
+   view.querySelector('#cvList').insertAdjacentHTML('afterbegin','<div class="cv-c" id="cvPick"><div class="cv-sm">Выберите предмет из расписания или создайте новый:</div><div class="cv-chips">'+subs.map(n=>'<button type="button" class="cv-chip" data-pick="'+esc(n)+'">'+esc(n)+'</button>').join('')+'</div><button type="button" class="cv-go" data-pick="">✏️ Новый предмет</button></div>')};
   view.addEventListener('input',e=>{const c=e.target.closest('.cv-c[data-i]');if(!c)return;const f=e.target.dataset.f;if(!f||f==='newg')return;const s=st.s[+c.dataset.i];s[f]=e.target.value;sv();upd(c,s)});
   const addG=c=>{const s=st.s[+c.dataset.i],inp=c.querySelector('[data-f=newg]'),v=num(inp.value);if(v==null){inp.focus();return}(s.grades=s.grades||[]).push(v);sv();const i=+c.dataset.i;draw();view.querySelector('.cv-c[data-i="'+i+'"] [data-f=newg]').focus()};
   view.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.dataset.f==='newg'){e.preventDefault();addG(e.target.closest('.cv-c'))}});
-  view.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const c=b.closest('.cv-c'),s=c&&st.s[+c.dataset.i],a=b.dataset.a;
+  view.addEventListener('click',e=>{const pk=e.target.closest('[data-pick]');if(pk){addSub(pk.dataset.pick);return}const b=e.target.closest('[data-a]');if(!b)return;const c=b.closest('.cv-c'),s=c&&st.s[+c.dataset.i],a=b.dataset.a;
    if(a==='addg')addG(c);else if(a==='delg'){s.grades.splice(+b.dataset.j,1);sv();draw()}
    else if(a==='mode'){s.mode=b.dataset.m;sv();draw()}
    else if(a==='del'&&confirm('Удалить предмет «'+(s.name||'без названия')+'»?')){st.s.splice(+c.dataset.i,1);sv();draw()}});
@@ -1964,7 +1974,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 <script id="sp-v2-js">
 /* ===== StudyPlay v2 (главное меню, мультифайлы, редактор-мастер, экспорт). Плеер и прохождение теста не менялись. ===== */
 const SP_MAX=10;
-let spFiles=[],badList=[],spMulti=true,spView='home',spPwOk=false,spCnt=40,edOpen=false,edShown=false,edStep=1,edQuery='',spLastBad=[],spDirty=false,spDraftWarned=false;
+let spFiles=[],badList=[],spMulti=true,spView='home',spPwOk=false,spCnt=40,edOpen=false,edShown=false,edStep=1,edQuery='',spLastBad=[],spDirty=false,spDraftWarned=false;window.spPwState=()=>spPwOk;window.spPwUnlock=()=>{spPwOk=true;try{spMark()}catch(e){}};
 const spUid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const isKb=q=>q.type==='keyboard';
 const isSpecial=q=>!!(q.special||isKb(q)||q.img||(q.opts||[]).some(o=>o.img));
@@ -2928,7 +2938,7 @@ function exportGithub(which){
  const sched={version:ver,updatedAt:new Date().toISOString(),timeSlots:data.timeSlots,subjects:data.subjects.map(s=>({id:s.id,code:s.code||'',name:s.name,teacher:s.teacher||''})),schedule:data.schedule};
  if(which==='manifest'){downloadText(JSON.stringify({version:ver,files},null,2),'manifest.json','application/json');toast('Скачан manifest.json (версия '+ver+'). Положите его в папку data/'+(window.SP_GROUP_DIR||'')+'/ репозитория, а сами файлы — в data/'+(window.SP_GROUP_DIR||'')+'/files/<предмет>/.')}
  else{downloadText(JSON.stringify(sched,null,2),'schedule.json','application/json');toast('Скачан schedule.json (версия '+ver+'). Положите его в папку data/'+(window.SP_GROUP_DIR||'')+'/ репозитория.')}}
-window.studyPlayHub={refreshBase,useCourse,exportGithub,infoModal};
+window.studyPlayHub={refreshBase,useCourse,exportGithub,infoModal,subjects:()=>[...new Set(data.subjects.map(x=>cleanName(x.name)).filter(Boolean))]};
 
 /* ===== v3: безопасный импорт (слияние); сначала проверка, потом применение ===== */
 $('#scheduleInput').addEventListener('change',async e=>{
@@ -3182,7 +3192,7 @@ function modal(title,html,onClose){
  return{el:o,close}}
 /* --- памятка автора --- */
 function authorGuide(){modal('Памятка для автора: логины, группы и расписание на GitHub',`<h3 style="margin:0 0 6px">1. Логины, пароли и группы</h3><ol>
-<li>Откройте «⋯ Ещё» → <b>👥 Логины и пароли (файл)</b> (или 👤 Профиль → тот же пункт). В списке сразу есть все учётки, которые сайт уже знает, — старые не потеряются.</li>
+<li>Откройте «⋯ Ещё» → <b>👥 Логины и пароли (файл)</b> (или 👤 Профиль → тот же пункт). Окно защищено паролем плеера: если вы уже ввели его («🔑 Ввод пароля»), оно откроется сразу, иначе сайт спросит пароль. В списке сразу есть все учётки, которые сайт уже знает, — старые не потеряются.</li>
 <li>Добавьте строки: <b>логин, пароль, группа</b> (например <code>ИР-252</code>), <b>папка</b> (например <code>ir-252</code> — сайт подставляет её сам, но вы можете изменить) и имя. Если у вас есть старый файл — «📥 Объединить с файлом…»; текущий файл с GitHub подтягивает «☁ Подтянуть с GitHub».</li>
 <li>Нажмите <b>⬇ Скачать accounts.json</b> и загрузите его в репозиторий как <code>data/accounts.json</code> (замена файла). Сделайте <code>git push</code>.</li>
 <li>Через 1–2 минуты новые логины работают. Человек входит один раз — сайт его запоминает; выйти можно в 👤 Профиль.</li></ol>
