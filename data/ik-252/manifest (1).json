@@ -1,0 +1,26 @@
+{
+  "version": "2026-10-23.7",
+  "files": [
+    {
+      "subject": "Философия",
+      "kind": "link",
+      "name": "Философия ТГ",
+      "url": "https://t.me/+fJjFpTkfN7Y1ODY6",
+      "note": ""
+    },
+    {
+      "subject": "Философия",
+      "kind": "test",
+      "name": "Философия докс.docx",
+      "path": "data/ir-252/files/Философия/Философия докс.docx",
+      "size": 72629
+    },
+    {
+      "subject": "Объектіге бағытталған бағдарламалау",
+      "kind": "test",
+      "name": "C++ question-final kaz testing_фик211,мик211.docx",
+      "path": "data/ir-252/files/Объектіге бағытталған бағдарламалау/C++ question-final kaz testing_фик211,мик211.docx",
+      "size": 60832
+    }
+  ]
+}
