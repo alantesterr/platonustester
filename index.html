@@ -2822,7 +2822,7 @@ function openMatMenu(btn,s,type,i){
 function matAct(act,s,type,i){
  const arr=listOf(s,type),f=arr[i];if(!f)return;
  if(act==='open')return openItem(s,type,i);
- if(act==='dl'){if(f.base){const a=document.createElement('a');a.href=f.path;a.download=f.name;a.target='_blank';a.rel='noopener noreferrer';document.body.appendChild(a);a.click();a.remove()}else downloadFile(f);return}
+ if(act==='dl'){if(f.base){openSite(f.path,true,f.name)}else downloadFile(f);return}
  if(act==='pin'){if(f.base){data.pins=data.pins||{};if(data.pins[f.id])delete data.pins[f.id];else data.pins[f.id]=1}else f.pinned=!f.pinned;save();render();return}
  if(act==='up'||act==='down'){const ord=viewOrder(arr),pos=ord.indexOf(i),j=ord[pos+(act==='up'?-1:1)];if(j===undefined||arr[j].base||isPin(arr[j])!==isPin(f))return;[arr[i],arr[j]]=[arr[j],arr[i]];save();render();return}
  if(act==='del'){if(f.base)return;if(!confirm('Удалить «'+f.name+'»?'))return;dropFile(f);arr.splice(i,1);save();render()}}
@@ -2830,8 +2830,8 @@ async function openItem(s,type,i){
  const arr=listOf(s,type),f=arr[i];if(!f)return;
  if(f.kind==='link'){window.open(f.url,'_blank','noopener,noreferrer');return}
  if(f.base){
-  if(type==='test'){try{if(!f.content){const r=await fetch(f.path);if(!r.ok)throw Error('HTTP '+r.status);const b=await r.blob();f.content=await readAsDataURL(b);f.type=f.type||b.type}}catch(e){toast('Не удалось загрузить тест с сайта: '+e.message,'error');return}openSubjectTester(f)}
-  else window.open(f.path,'_blank','noopener,noreferrer');
+  if(type==='test'){try{if(!f.content){const{r}=await fetchSite(f.path);const b=await r.blob();f.content=await readAsDataURL(b);f.type=f.type||b.type}}catch(e){toast('Не удалось загрузить тест с сайта: '+e.message,'error');return}openSubjectTester(f)}
+  else if(f.base)openSite(f.path,false);else window.open(f.path,'_blank','noopener,noreferrer');
   return}
  if(type==='test')return openSubjectTester(f);
  const files=arr.filter(x=>!x.base&&x.kind!=='link'&&x.content),idx=files.indexOf(f);
@@ -2907,6 +2907,14 @@ function applyBase(){
   data.timeSlots=B.timeSlots&&B.timeSlots.length?B.timeSlots:DEFAULT_TIMES.map((t,i)=>({id:'slot'+i,start:t[0],end:t[1]}));
   data.schedule=(B.schedule||[]).map(l=>({...l,subjectId:idMap.get(l.subjectId)||l.subjectId}))}
  data.baseVersion=B.version||''}
+const encSeg=x=>{try{return encodeURIComponent(decodeURIComponent(x))}catch(e){return encodeURIComponent(x)}};
+function siteCands(p){p=String(p||'').trim().replace(/\\/g,'/').replace(/^\.?\//,'');if(/^https?:\/\//i.test(p))return[p];
+ const d=window.SP_GROUP_DIR,c=[],add=x=>{x=x.split('/').map(encSeg).join('/');if(!c.includes(x))c.push(x)};
+ [p,p.normalize('NFC'),p.normalize('NFD')].forEach(q=>{add(q);if(d){if(q.startsWith('data/files/'))add('data/'+d+'/files/'+q.slice(11));const pre='data/'+d+'/files/';if(q.startsWith(pre))add('data/files/'+q.slice(pre.length));if(!q.startsWith('data/')){add('data/'+d+'/'+q);add('data/'+q)}}});return c}
+async function fetchSite(p,head){if(location.protocol==='file:')throw Error('сайт открыт как файл — откройте его по адресу GitHub Pages');
+ const cs=siteCands(p);let st=0;for(const u of cs){try{const r=await fetch(u,{method:head?'HEAD':'GET',cache:'no-cache'});if(r.ok)return{r,u};st=st||r.status}catch(e){}}
+ throw Error((st?'HTTP '+st:'нет сети')+' — файл не найден по пути «'+decodeURI(cs[0])+'». Проверьте путь в manifest.json, имя файла и регистр букв; после git push подождите 1–2 минуты.')}
+async function openSite(p,dl,name){const w=dl?null:window.open('','_blank');try{const{u}=await fetchSite(p,true);if(dl){const a=document.createElement('a');a.href=u;a.download=name||'';a.target='_blank';a.rel='noopener noreferrer';document.body.appendChild(a);a.click();a.remove()}else if(w)w.location.href=u;else window.open(u,'_blank')}catch(e){if(w)w.close();toast('Не удалось открыть файл: '+e.message,'error')}}
 let pendBase=null,updLater=false,lastChk=0;
 const baseChanged=r=>!base||base.version!==r.version||(!r.version&&JSON.stringify([base.schedule,base.files])!==JSON.stringify([r.schedule,r.files]));
 async function checkUpdate(){if(Date.now()-lastChk<60000)return;lastChk=Date.now();const r=await fetchBase();if(!r||!base)return;if(baseChanged(r)){pendBase=r;updLater=false;showUpd()}}
