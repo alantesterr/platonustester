@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-23.3",
+  "version": "2026-10-23.4",
   "files": [
     {
       "subject": "Философия",
@@ -12,28 +12,28 @@
       "subject": "Философия",
       "kind": "test",
       "name": "Философия докс.docx",
-      "path": "data/files/Философия/Философия докс.docx",
+      "path": "data/ir-252/files/Философия/Философия докс.docx",
       "size": 72629
     },
     {
       "subject": "Информационно-коммуникационные технологии",
       "kind": "test",
       "name": "studyplay-all.txt",
-      "path": "data/files/Информационно-коммуникационные технологии/studyplay-all.txt",
+      "path": "data/ir-252/files/Информационно-коммуникационные технологии/studyplay-all.txt",
       "size": 74408
     },
     {
       "subject": "Object-Oriented Programming (Borland C ++ Builder)",
       "kind": "test",
       "name": "C++ question-final kaz testing_фик211,мик211.docx",
-      "path": "data/files/Object-Oriented Programming (Borland C ++ Builder)/C++ question-final kaz testing_фик211,мик211.docx",
+      "path": "data/ir-252/files/Object-Oriented Programming (Borland C ++ Builder)/C++ question-final kaz testing_фик211,мик211.docx",
       "size": 60832
     },
     {
       "subject": "Object-Oriented Programming (Borland C ++ Builder)",
       "kind": "test",
       "name": "C_questions_English.txt",
-      "path": "data/files/Object-Oriented Programming (Borland C ++ Builder)/C_questions_English.txt",
+      "path": "data/ir-252/files/Object-Oriented Programming (Borland C ++ Builder)/C_questions_English.txt",
       "size": 40420
     }
   ]
